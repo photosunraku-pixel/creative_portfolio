@@ -722,8 +722,30 @@
         }
 
         /* ===== SPREAD VIEW (flat category grid overlay) ===== */
-        @keyframes spreadIn  { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: translateY(0) } }
-        @keyframes spreadOut { from { opacity: 1; transform: translateY(0)  } to { opacity: 0; transform: translateY(12px) } }
+        @keyframes spreadIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes spreadOut {
+            from {
+                opacity: 1;
+                transform: translateY(0)
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(12px)
+            }
+        }
+
         .spread {
             position: absolute;
             inset: 0;
@@ -733,10 +755,11 @@
             justify-content: center;
             overflow: hidden;
             pointer-events: none;
-            animation: spreadIn 0.38s cubic-bezier(0.2,0.8,0.3,1) forwards
+            animation: spreadIn 0.38s cubic-bezier(0.2, 0.8, 0.3, 1) forwards
         }
+
         .spread.out {
-            animation: spreadOut 0.32s cubic-bezier(0.5,0,0.8,0.3) forwards;
+            animation: spreadOut 0.32s cubic-bezier(0.5, 0, 0.8, 0.3) forwards;
             pointer-events: none
         }
 
@@ -758,7 +781,7 @@
             height: calc(var(--sw, 180px) * 16 / 9);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 14px 34px rgba(0,0,0,.28);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, .28);
             flex-shrink: 0;
             cursor: pointer;
             transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, outline 0.25s ease
@@ -804,7 +827,7 @@
             font: 300 10px var(--wide);
             letter-spacing: .02em;
             color: #fff;
-            background: linear-gradient(transparent, rgba(0,0,0,.6))
+            background: linear-gradient(transparent, rgba(0, 0, 0, .6))
         }
 
         @media (max-width:860px) {
@@ -892,139 +915,84 @@
             position: fixed;
             inset: 0;
             z-index: 99999;
-            background: rgba(14, 12, 19, 0.88);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            backdrop-filter: blur(24px) saturate(180%);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: clamp(14px, 3vw, 36px);
             cursor: pointer;
-            animation: ytFadeIn 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background:
+                radial-gradient(60% 50% at 82% 8%, rgba(183, 156, 245, .55), transparent 62%),
+                radial-gradient(50% 45% at 8% 92%, rgba(139, 92, 246, .28), transparent 60%),
+                rgba(242, 241, 239, .74);
+            -webkit-backdrop-filter: blur(22px);
+            backdrop-filter: blur(22px);
+            animation: ytFadeIn .28s ease forwards;
         }
 
         @keyframes ytFadeIn {
-            from { opacity: 0 }
-            to { opacity: 1 }
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
         }
 
         .yt-modal-dialog {
             position: relative;
             cursor: default;
-            background: #121018;
-            border-radius: 22px;
-            /* Good glowing border for preview */
-            border: 2px solid #8b5cf6;
-            box-shadow: 
-                0 0 0 1px rgba(255, 255, 255, 0.16),
-                0 0 30px rgba(139, 92, 246, 0.55),
-                0 0 80px rgba(124, 77, 234, 0.32),
-                0 30px 80px -10px rgba(0, 0, 0, 0.95);
-            overflow: hidden;
             display: flex;
             flex-direction: column;
-            animation: ytPopIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            transform-origin: center center;
             max-height: 94vh;
+            max-width: 96vw;
+            background: var(--dark);
+            color: #fff;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 40px 90px -24px rgba(35, 33, 34, .55), 0 0 0 1px rgba(35, 33, 34, .06);
+            animation: ytPopIn .4s cubic-bezier(.16, 1, .3, 1) forwards;
+            font-family: var(--wide);
+            font-weight: 300;
+        }
+
+        .yt-modal-dialog.is-short {
+            flex-direction: row;
         }
 
         @keyframes ytPopIn {
             from {
                 opacity: 0;
-                transform: scale(0.92) translateY(16px);
+                transform: translateY(18px) scale(.95)
             }
+
             to {
                 opacity: 1;
-                transform: scale(1) translateY(0);
+                transform: none
             }
-        }
-
-        .yt-dialog-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 13px 18px;
-            background: rgba(22, 19, 30, 0.96);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.28);
-            gap: 16px;
-            z-index: 2;
-        }
-
-        .yt-dialog-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 0;
-        }
-
-        .yt-dialog-tag {
-            font: 500 10px/1.2 var(--wide);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #cfbcff;
-            background: rgba(124, 77, 234, 0.25);
-            border: 1px solid rgba(139, 92, 246, 0.45);
-            padding: 4px 10px;
-            border-radius: 99px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .yt-dialog-title {
-            font: 300 15px/1.2 var(--wide);
-            letter-spacing: -0.02em;
-            color: #faf9f6;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .yt-dialog-close {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.08);
-            color: #faf9f6;
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            font-size: 15px;
-            line-height: 1;
-            flex-shrink: 0;
-            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .yt-dialog-close:hover {
-            background: var(--violet);
-            border-color: #8b5cf6;
-            color: #fff;
-            transform: scale(1.12);
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
-        }
-
-        .yt-dialog-close:focus-visible {
-            outline: 2px solid var(--violet);
-            outline-offset: 2px;
         }
 
         .yt-video-wrap {
             position: relative;
             background: #000;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin: 12px;
+            border-radius: 20px;
+            flex-shrink: 0;
         }
 
         .yt-video-wrap.is-short {
-            width: min(calc((84vh - 64px) * 9 / 16), 86vw);
+            height: min(80vh, 760px);
             aspect-ratio: 9 / 16;
+            order: 2;
+            align-self: center;
         }
 
         .yt-video-wrap.is-wide {
-            width: min(960px, 88vw, calc((84vh - 64px) * 16 / 9));
+            width: min(960px, 88vw, calc((94vh - 150px) * 16 / 9));
             aspect-ratio: 16 / 9;
+            order: -1;
+            align-self: center;
         }
 
         .yt-iframe {
@@ -1032,19 +1000,179 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            border: 0;
             display: block;
         }
 
-        .yt-dismiss-hint {
-            text-align: center;
-            padding: 8px 12px;
-            font: 300 11px var(--wide);
-            letter-spacing: 0.12em;
-            color: rgba(255, 255, 255, 0.45);
-            background: rgba(18, 16, 24, 0.85);
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            pointer-events: none;
+        .yt-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 28px;
+            width: clamp(250px, 24vw, 340px);
+            padding: 34px 28px 28px 34px;
+            order: 1;
+        }
+
+        .is-wide .yt-info {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: auto;
+            padding: 8px 28px 22px 34px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .yt-tag {
+            display: inline-block;
+            align-self: flex-start;
+            padding: .45em 1.15em .5em;
+            border-radius: 99px;
+            background: var(--violet);
+            color: #fff;
+            font: 300 italic 13px/1.1 var(--wide);
+            transform: rotate(-2.5deg);
+            white-space: nowrap;
+        }
+
+        .yt-title {
+            font: 300 clamp(26px, 2.7vw, 40px)/1.02 var(--wide);
+            letter-spacing: -.04em;
+            margin: 22px 0 0;
+            overflow-wrap: anywhere;
+        }
+
+        .is-wide .yt-title {
+            margin: 0;
+            font-size: clamp(22px, 2.4vw, 32px);
+        }
+
+        .yt-count {
+            font: 300 clamp(44px, 5vw, 76px)/.9 var(--wide);
+            letter-spacing: -.06em;
+            color: #b79cf5;
+        }
+
+        .yt-count em {
+            font: 300 14px var(--wide);
+            font-style: normal;
+            letter-spacing: .1em;
+            opacity: .5;
+            margin-left: 8px;
+            color: #fff;
+        }
+
+        .is-wide .yt-count {
+            display: none;
+        }
+
+        .yt-cta {
+            display: inline-block;
+            padding: .9em 1.6em;
+            border-radius: 99px;
+            background: var(--cream);
+            color: var(--ink);
+            text-decoration: none;
+            white-space: nowrap;
+            font: 300 12px var(--wide);
+            transition: background .25s, color .25s;
+        }
+
+        .yt-cta:hover {
+            background: var(--violet);
+            color: #fff;
+        }
+
+        .yt-cta:focus-visible {
+            outline: 2px solid #b79cf5;
+            outline-offset: 3px;
+        }
+
+        .yt-hint {
+            font: 500 10px var(--mono);
+            letter-spacing: .2em;
+            opacity: .4;
+            margin-top: 16px;
+        }
+
+        .is-wide .yt-hint {
+            display: none;
+        }
+
+        .yt-dialog-close {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            z-index: 3;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .3);
+            background: rgba(35, 33, 34, .55);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: background .25s, border-color .25s, transform .25s;
+        }
+
+        .yt-dialog-close:hover {
+            background: var(--violet);
+            border-color: var(--violet);
+            transform: rotate(90deg);
+        }
+
+        .yt-dialog-close:focus-visible {
+            outline: 2px solid #b79cf5;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 760px) {
+            .yt-modal-dialog.is-short {
+                flex-direction: column;
+            }
+
+            .yt-video-wrap.is-short {
+                height: min(60vh, 560px);
+                order: -1;
+            }
+
+            .yt-info {
+                width: auto;
+                padding: 6px 22px 22px;
+                gap: 14px;
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .yt-title {
+                margin: 0;
+                font-size: 22px;
+            }
+
+            .yt-count,
+            .yt-hint {
+                display: none;
+            }
+
+            .yt-dialog-close {
+                top: 18px;
+                right: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .yt-modal-backdrop,
+            .yt-modal-dialog {
+                animation: none;
+            }
         }
     </style>
 </head>
@@ -1089,34 +1217,34 @@ I specialize in video editing and content creation for brands and creators, help
         /* WORK: real portfolio videos */
         const WORK = [
             // Cinematics
-            { cat: 'cinematics', title: 'Cooking',                cover: cover('#8b5cf6','#1d1a2e','C1'), video: 'portfolio_previews/cinematics/Cooking_preview.mp4', yt: 'https://youtu.be/Fg8EH5j1GG0' },
-            { cat: 'cinematics', title: 'Gym Cinematics',         cover: cover('#8b5cf6','#1d1a2e','C2'), video: 'portfolio_previews/cinematics/Gym_Cinematics_preview.mp4', yt: 'https://youtube.com/shorts/nOeJmo30L5M?feature=share' },
-            { cat: 'cinematics', title: 'Gym GOT Edit',           cover: cover('#8b5cf6','#1d1a2e','C3'), video: 'portfolio_previews/cinematics/Gym_GOTed_preview.mp4', yt: 'https://youtube.com/shorts/SOss9ouGvCQ?feature=share' },
-            { cat: 'cinematics', title: 'Urban Monkey Commercial',cover: cover('#8b5cf6','#1d1a2e','C4'), video: 'portfolio_previews/cinematics/UrbanMonkeyCommercial_preview.mp4', yt: 'https://youtu.be/5JaQS8f1dsE' },
+            { cat: 'cinematics', title: 'Cooking', cover: cover('#8b5cf6', '#1d1a2e', 'C1'), video: 'portfolio_previews/cinematics/Cooking_preview.mp4', yt: 'https://youtu.be/Fg8EH5j1GG0' },
+            { cat: 'cinematics', title: 'Gym Cinematics', cover: cover('#8b5cf6', '#1d1a2e', 'C2'), video: 'portfolio_previews/cinematics/Gym_Cinematics_preview.mp4', yt: 'https://youtube.com/shorts/nOeJmo30L5M?feature=share' },
+            { cat: 'cinematics', title: 'Gym GOT Edit', cover: cover('#8b5cf6', '#1d1a2e', 'C3'), video: 'portfolio_previews/cinematics/Gym_GOTed_preview.mp4', yt: 'https://youtube.com/shorts/SOss9ouGvCQ?feature=share' },
+            { cat: 'cinematics', title: 'Urban Monkey Commercial', cover: cover('#8b5cf6', '#1d1a2e', 'C4'), video: 'portfolio_previews/cinematics/UrbanMonkeyCommercial_preview.mp4', yt: 'https://youtu.be/5JaQS8f1dsE' },
             // Motivation
-            { cat: 'motivation', title: 'Before & After',         cover: cover('#b79cf5','#2a2160','M1'), video: 'portfolio_previews/Motivationsl/Before Aftermp4_preview.mp4', yt: 'https://youtube.com/shorts/zkSUoHCzGZM?feature=share' },
-            { cat: 'motivation', title: 'Iman – Create',          cover: cover('#b79cf5','#2a2160','M2'), video: 'portfolio_previews/Motivationsl/Iman tells us why you need to create and not just-_preview.mp4', yt: 'https://youtube.com/shorts/vChpWD-euaQ?feature=share' },
-            { cat: 'motivation', title: 'Kobe – Consistency',     cover: cover('#b79cf5','#2a2160','M3'), video: 'portfolio_previews/Motivationsl/Kobe Bryant_ The Consistency of Work_2_preview.mp4', yt: 'https://youtube.com/shorts/XQxfHCqOXeg?feature=share' },
-            { cat: 'motivation', title: 'Nested Sequence',        cover: cover('#b79cf5','#2a2160','M4'), video: 'portfolio_previews/Motivationsl/Nested Sequence 03_2_preview.mp4', yt: 'https://youtube.com/shorts/7swe-5dfb6I?feature=share' },
-            { cat: 'motivation', title: 'One Shot Motiv',         cover: cover('#b79cf5','#2a2160','M5'), video: 'portfolio_previews/Motivationsl/oneSHoT_Motiv_preview.mp4', yt: 'https://youtube.com/shorts/BpdqjK6hgJk?feature=share' },
+            { cat: 'motivation', title: 'Before & After', cover: cover('#b79cf5', '#2a2160', 'M1'), video: 'portfolio_previews/Motivationsl/Before Aftermp4_preview.mp4', yt: 'https://youtube.com/shorts/zkSUoHCzGZM?feature=share' },
+            { cat: 'motivation', title: 'Iman – Create', cover: cover('#b79cf5', '#2a2160', 'M2'), video: 'portfolio_previews/Motivationsl/Iman tells us why you need to create and not just-_preview.mp4', yt: 'https://youtube.com/shorts/vChpWD-euaQ?feature=share' },
+            { cat: 'motivation', title: 'Kobe – Consistency', cover: cover('#b79cf5', '#2a2160', 'M3'), video: 'portfolio_previews/Motivationsl/Kobe Bryant_ The Consistency of Work_2_preview.mp4', yt: 'https://youtube.com/shorts/XQxfHCqOXeg?feature=share' },
+            { cat: 'motivation', title: 'Nested Sequence', cover: cover('#b79cf5', '#2a2160', 'M4'), video: 'portfolio_previews/Motivationsl/Nested Sequence 03_2_preview.mp4', yt: 'https://youtube.com/shorts/7swe-5dfb6I?feature=share' },
+            { cat: 'motivation', title: 'One Shot Motiv', cover: cover('#b79cf5', '#2a2160', 'M5'), video: 'portfolio_previews/Motivationsl/oneSHoT_Motiv_preview.mp4', yt: 'https://youtube.com/shorts/BpdqjK6hgJk?feature=share' },
             // Transitions
-            { cat: 'transitions', title: 'Idli Meme',             cover: cover('#232122','#7c4dea','T1'), video: 'portfolio_previews/Transitions/idli 1with meme_preview.mp4', yt: 'https://youtu.be/tv6Wh_uWyIY' },
-            { cat: 'transitions', title: 'Milkshake',             cover: cover('#232122','#7c4dea','T2'), video: 'portfolio_previews/Transitions/milkshake transition_preview.mp4', yt: 'https://youtube.com/shorts/lg7lsIWkpO8?feature=share' },
-            { cat: 'transitions', title: 'Oats',                  cover: cover('#232122','#7c4dea','T3'), video: 'portfolio_previews/Transitions/oats transition_preview.mp4', yt: 'https://youtu.be/iEpfQowojKI' },
+            { cat: 'transitions', title: 'Idli Meme', cover: cover('#232122', '#7c4dea', 'T1'), video: 'portfolio_previews/Transitions/idli 1with meme_preview.mp4', yt: 'https://youtu.be/tv6Wh_uWyIY' },
+            { cat: 'transitions', title: 'Milkshake', cover: cover('#232122', '#7c4dea', 'T2'), video: 'portfolio_previews/Transitions/milkshake transition_preview.mp4', yt: 'https://youtube.com/shorts/lg7lsIWkpO8?feature=share' },
+            { cat: 'transitions', title: 'Oats', cover: cover('#232122', '#7c4dea', 'T3'), video: 'portfolio_previews/Transitions/oats transition_preview.mp4', yt: 'https://youtu.be/iEpfQowojKI' },
             // Tuff Edits
-            { cat: 'brand', title: 'Glasses',                     cover: cover('#cfbcff','#3b2a8f','B1'), video: 'portfolio_previews/Tuff edits/Glasses_preview.mp4', yt: 'https://youtube.com/shorts/TWZzo8m1gFY?feature=share' },
-            { cat: 'brand', title: 'JJK Edit',                    cover: cover('#cfbcff','#3b2a8f','B2'), video: 'portfolio_previews/Tuff edits/JJK version  Buy my Quality, link in bioFollow me for more- @lohax_preview.mp4', yt: 'https://youtube.com/shorts/A3CAfbgDxkc?feature=share' },
-            { cat: 'brand', title: 'ODETARI Keep Up',             cover: cover('#cfbcff','#3b2a8f','B3'), video: 'portfolio_previews/Tuff edits/ODETARI - KEEP UP (Lyrics)_3_preview.mp4', yt: 'https://youtube.com/shorts/sR_UjZkaWtc?feature=share' },
-            { cat: 'brand', title: 'VFX Pringle',                 cover: cover('#cfbcff','#3b2a8f','B4'), video: 'portfolio_previews/Tuff edits/VFXpringle_preview.mp4', yt: 'https://youtube.com/shorts/EDxeLUs0QbU?feature=share' },
-            { cat: 'brand', title: 'Raw Footage',                 cover: cover('#cfbcff','#3b2a8f','B5'), video: 'portfolio_previews/Tuff edits/VID_20240811_160409496_preview.mp4', yt: 'https://youtube.com/shorts/eMAm0WpJEvY?feature=share' },
-            { cat: 'brand', title: 'Sekiro',                      cover: cover('#cfbcff','#3b2a8f','B6'), video: 'portfolio_previews/Tuff edits/sekiro_preview.mp4', yt: 'https://youtu.be/-RjYrG-DERY' },
-            { cat: 'brand', title: 'Spider-Man',                  cover: cover('#cfbcff','#3b2a8f','B7'), video: 'portfolio_previews/Tuff edits/spiderman_preview.mp4', yt: 'https://youtube.com/shorts/IZeXJpLw9bU?feature=share' },
-            { cat: 'brand', title: 'TV Off / Back',               cover: cover('#cfbcff','#3b2a8f','B8'), video: 'portfolio_previews/Tuff edits/tvOff_Back_preview.mp4', yt: 'https://youtu.be/3wULu0JYipc' },
+            { cat: 'brand', title: 'Glasses', cover: cover('#cfbcff', '#3b2a8f', 'B1'), video: 'portfolio_previews/Tuff edits/Glasses_preview.mp4', yt: 'https://youtube.com/shorts/TWZzo8m1gFY?feature=share' },
+            { cat: 'brand', title: 'JJK Edit', cover: cover('#cfbcff', '#3b2a8f', 'B2'), video: 'portfolio_previews/Tuff edits/JJK version  Buy my Quality, link in bioFollow me for more- @lohax_preview.mp4', yt: 'https://youtube.com/shorts/A3CAfbgDxkc?feature=share' },
+            { cat: 'brand', title: 'ODETARI Keep Up', cover: cover('#cfbcff', '#3b2a8f', 'B3'), video: 'portfolio_previews/Tuff edits/ODETARI - KEEP UP (Lyrics)_3_preview.mp4', yt: 'https://youtube.com/shorts/sR_UjZkaWtc?feature=share' },
+            { cat: 'brand', title: 'VFX Pringle', cover: cover('#cfbcff', '#3b2a8f', 'B4'), video: 'portfolio_previews/Tuff edits/VFXpringle_preview.mp4', yt: 'https://youtube.com/shorts/EDxeLUs0QbU?feature=share' },
+            { cat: 'brand', title: 'Raw Footage', cover: cover('#cfbcff', '#3b2a8f', 'B5'), video: 'portfolio_previews/Tuff edits/VID_20240811_160409496_preview.mp4', yt: 'https://youtube.com/shorts/eMAm0WpJEvY?feature=share' },
+            { cat: 'brand', title: 'Sekiro', cover: cover('#cfbcff', '#3b2a8f', 'B6'), video: 'portfolio_previews/Tuff edits/sekiro_preview.mp4', yt: 'https://youtu.be/-RjYrG-DERY' },
+            { cat: 'brand', title: 'Spider-Man', cover: cover('#cfbcff', '#3b2a8f', 'B7'), video: 'portfolio_previews/Tuff edits/spiderman_preview.mp4', yt: 'https://youtube.com/shorts/IZeXJpLw9bU?feature=share' },
+            { cat: 'brand', title: 'TV Off / Back', cover: cover('#cfbcff', '#3b2a8f', 'B8'), video: 'portfolio_previews/Tuff edits/tvOff_Back_preview.mp4', yt: 'https://youtu.be/3wULu0JYipc' },
             // Misc
-            { cat: 'misc', title: 'Color Grade Reel',             cover: cover('#7c4dea','#121110','X1'), video: 'portfolio_previews/Miscellaneous/ColorGradeReel_preview.mp4', yt: 'https://youtube.com/shorts/c0HmqCdiDTw?feature=share' },
-            { cat: 'misc', title: 'Eye Macro',                    cover: cover('#7c4dea','#121110','X2'), video: 'portfolio_previews/Miscellaneous/Dark brown eye opening macro   Stock Video Footage - 1M (720p, h264)_preview.mp4', yt: 'https://youtu.be/Ae-NAoN4frA' },
-            { cat: 'misc', title: 'Lofi Pre-edit',                cover: cover('#7c4dea','#121110','X3'), video: 'portfolio_previews/Miscellaneous/lofi_pre_edit_preview.mp4', yt: 'https://youtu.be/7XqcGfxS82E' },
-            { cat: 'misc', title: 'Real YT AS3',                  cover: cover('#7c4dea','#121110','X4'), video: 'portfolio_previews/Miscellaneous/real yt as3_preview.mp4', yt: 'https://youtu.be/unZxJBBqF5M' },
+            { cat: 'misc', title: 'Color Grade Reel', cover: cover('#7c4dea', '#121110', 'X1'), video: 'portfolio_previews/Miscellaneous/ColorGradeReel_preview.mp4', yt: 'https://youtube.com/shorts/c0HmqCdiDTw?feature=share' },
+            { cat: 'misc', title: 'Eye Macro', cover: cover('#7c4dea', '#121110', 'X2'), video: 'portfolio_previews/Miscellaneous/Dark brown eye opening macro   Stock Video Footage - 1M (720p, h264)_preview.mp4', yt: 'https://youtu.be/Ae-NAoN4frA' },
+            { cat: 'misc', title: 'Lofi Pre-edit', cover: cover('#7c4dea', '#121110', 'X3'), video: 'portfolio_previews/Miscellaneous/lofi_pre_edit_preview.mp4', yt: 'https://youtu.be/7XqcGfxS82E' },
+            { cat: 'misc', title: 'Real YT AS3', cover: cover('#7c4dea', '#121110', 'X4'), video: 'portfolio_previews/Miscellaneous/real yt as3_preview.mp4', yt: 'https://youtu.be/unZxJBBqF5M' },
         ];
         const UNIQUE_VIDEOS = [...new Set(WORK.map(w => w.video))];
         const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -1430,7 +1558,7 @@ I specialize in video editing and content creation for brands and creators, help
                 const v = vidRef.current;
                 if (!v) return;
                 if (shouldPlay) {
-                    v.play().catch(() => {});
+                    v.play().catch(() => { });
                 } else {
                     v.pause();
                 }
@@ -1443,7 +1571,7 @@ I specialize in video editing and content creation for brands and creators, help
                 const show = () => v.classList.add('playing');
                 const hide = () => v.classList.remove('playing');
                 v.addEventListener('playing', show);
-                v.addEventListener('pause',   hide);
+                v.addEventListener('pause', hide);
                 return () => { v.removeEventListener('playing', show); v.removeEventListener('pause', hide); };
             }, []);
 
@@ -1484,64 +1612,46 @@ I specialize in video editing and content creation for brands and creators, help
         }
 
         function VideoModal({ item, onClose }) {
-            if (!item) return null;
-            const info = parseYt(item.yt);
-            if (!info || !info.id) return null;
+            const info = parseYt(item && item.yt);
+            const closeRef = useRef();
 
             useEffect(() => {
-                const onKey = e => {
-                    if (e.key === 'Escape') onClose();
-                };
+                const onKey = e => { if (e.key === 'Escape') onClose(); };
                 window.addEventListener('keydown', onKey);
                 const prev = document.body.style.overflow;
                 document.body.style.overflow = 'hidden';
-                return () => {
-                    window.removeEventListener('keydown', onKey);
-                    document.body.style.overflow = prev;
-                };
+                closeRef.current && closeRef.current.focus();
+                return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
             }, [onClose]);
+
+            if (!info || !info.id) return null;
 
             const catObj = CATEGORIES.find(c => c.id === item.cat);
             const catLabel = catObj ? catObj.label : item.cat;
-            // sound turned on by default (mute=0), autoplay=1, looping
+            const group = WORK.filter(w => w.cat === item.cat);
+            const pad = n => String(n).padStart(2, '0');
             const embedUrl = `https://www.youtube.com/embed/${info.id}?autoplay=1&mute=0&loop=1&playlist=${info.id}&rel=0&playsinline=1&enablejsapi=1`;
+            const kind = info.isShort ? ' is-short' : ' is-wide';
 
             return ReactDOM.createPortal(
-                h('div', {
-                    className: 'yt-modal-backdrop',
-                    onClick: e => {
-                        if (e.target === e.currentTarget) onClose();
-                    }
-                },
-                    h('div', {
-                        className: 'yt-modal-dialog' + (info.isShort ? ' is-short' : ' is-wide'),
-                        onClick: e => e.stopPropagation()
-                    },
-                        h('div', { className: 'yt-dialog-header' },
-                            h('div', { className: 'yt-dialog-info' },
-                                h('span', { className: 'yt-dialog-tag' }, catLabel),
-                                h('span', { className: 'yt-dialog-title' }, item.title)
-                            ),
-                            h('button', {
-                                className: 'yt-dialog-close',
-                                onClick: onClose,
-                                'aria-label': 'Close preview',
-                                title: 'Close (Esc)'
-                            }, '✕')
-                        ),
-                        h('div', {
-                            className: 'yt-video-wrap' + (info.isShort ? ' is-short' : ' is-wide')
-                        },
+                h('div', { className: 'yt-modal-backdrop', onClick: e => { if (e.target === e.currentTarget) onClose(); } },
+                    h('div', { className: 'yt-modal-dialog' + kind, role: 'dialog', 'aria-modal': true, 'aria-label': item.title, onClick: e => e.stopPropagation() },
+                        h('button', { ref: closeRef, className: 'yt-dialog-close', onClick: onClose, 'aria-label': 'Close preview', title: 'Close (Esc)' }, '✕'),
+                        h('div', { className: 'yt-video-wrap' + kind },
                             h('iframe', {
-                                src: embedUrl,
-                                title: item.title,
-                                className: 'yt-iframe',
+                                src: embedUrl, title: item.title, className: 'yt-iframe',
                                 allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
                                 allowFullScreen: true
-                            })
-                        ),
-                        h('div', { className: 'yt-dismiss-hint' }, 'Click anywhere outside to close · Esc')
-                    )
+                            })),
+                        h('div', { className: 'yt-info' },
+                            h('div', null,
+                                h('span', { className: 'yt-tag' }, catLabel),
+                                h('h3', { className: 'yt-title' }, item.title)),
+                            h('div', null,
+                                h('div', { className: 'yt-count' }, pad(group.indexOf(item) + 1), h('em', null, '/ ' + pad(group.length))),
+                                h('div', { style: { marginTop: 22 } },
+                                    h('a', { className: 'yt-cta', href: info.url, target: '_blank', rel: 'noopener' }, 'Watch on YouTube ↗')),
+                                h('div', { className: 'yt-hint' }, 'ESC TO CLOSE'))))
                 ),
                 document.body
             );
@@ -1661,13 +1771,16 @@ I specialize in video editing and content creation for brands and creators, help
                 return () => { window.removeEventListener('keydown', onKey); io.disconnect(); };
             }, []);
 
-            /* 5. GESTURES: drag, swipe, horizontal wheel -> target angle (vertical wheel scrolls the page) */
+            /* 5. GESTURES: drag, swipe, horizontal wheel -> target angle (vertical wheel scrolls the page).
+               A tap opens the card that was under the pointer on PRESS, so it works even while the wheel is moving. */
             useEffect(() => {
                 const stage = stageRef.current, DEG_PER_PX = 0.09;
-                let down = false, startX = 0, lastX = 0, lastT = 0;
+                let down = false, startX = 0, lastX = 0, lastT = 0, downCard = null;
                 const pd = e => {
                     if (e.button > 0) return;
+                    if (e.target.closest('.spread')) { S.dragged = false; return; }   // flat grid handles its own clicks
                     down = true; S.drag = true; S.vel = 0; S.dragged = false;
+                    downCard = e.target.closest('.card');              // card under the pointer NOW, before the wheel moves
                     startX = lastX = e.clientX; lastT = performance.now(); stage.classList.add('drag');
                 };
                 const pm = e => {
@@ -1679,8 +1792,13 @@ I specialize in video editing and content creation for brands and creators, help
                     S.vel = S.vel * 0.6 + (dd / dt) * 0.4;
                     lastX = e.clientX; lastT = now;
                 };
-                const pu = () => {
+                const pu = e => {
                     if (!down) return; down = false; S.drag = false; stage.classList.remove('drag');
+                    if (e.type === 'pointerup' && !S.dragged && downCard) {
+                        const w = WORK[(+downCard.dataset.i) % WORK.length];
+                        if (w) openPreview(w);                          // tap = open, even while the wheel is moving
+                    }
+                    downCard = null;
                     if (performance.now() - lastT > 80) S.vel = 0;
                     S.vel = clamp(S.vel, -700, 700);
                 };
@@ -1771,10 +1889,10 @@ I specialize in video editing and content creation for brands and creators, help
                     h('div', { className: 'bound' }, h('div', { className: 'sky', ref: skyRef, style: SKY_IMAGE ? { backgroundImage: `url("${SKY_IMAGE}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined })),
                     h('div', { className: 'scene', ref: sceneRef, style: { opacity: applied ? 0 : 1, pointerEvents: applied ? 'none' : 'auto' } },
                         allSlots.map((c, i) => h('a', {
-                            key: i, className: 'card', href: '#work-' + (i + 1), draggable: false, 'aria-label': c.title + ' – watch on YouTube',
+                            key: i, className: 'card', 'data-i': i, href: '#work-' + (i + 1), draggable: false, 'aria-label': c.title + ' – watch on YouTube',
                             onClick: e => {
                                 e.preventDefault();
-                                if (!S.dragged) openPreview(c);
+                                if (e.detail === 0) openPreview(c);   // keyboard Enter only; mouse/touch handled on pointerup
                             }
                         },
                             h('div', { className: 'face front' },
@@ -1795,7 +1913,7 @@ I specialize in video editing and content creation for brands and creators, help
                         transition: {
                             x: { duration: 0.55, ease: [0.4, 0, 0.2, 1] },
                             opacity: { duration: ui.instant ? 0 : 0.9, delay: ui.on ? ui.delay : 0, ease: 'easeOut' },
-                            y:       { duration: ui.instant ? 0 : 0.9, delay: ui.on ? ui.delay : 0, ease: 'easeOut' }
+                            y: { duration: ui.instant ? 0 : 0.9, delay: ui.on ? ui.delay : 0, ease: 'easeOut' }
                         }
                     },
                         h('div', null,
