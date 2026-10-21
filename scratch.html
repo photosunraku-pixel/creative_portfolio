@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Portfolio – scratch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500&family=Pinyon+Script&family=Instrument+Serif&family=JetBrains+Mono:wght@500;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #121110;
+            --paper: #f2f1ef;
+            --cream: #faf9f6;
+            --dark: #232122;
+            --violet: #7c4dea;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --mono: 'JetBrains Mono', ui-monospace, monospace;
+            --wide: 'Unbounded', 'Syne', system-ui, sans-serif
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        html {
+            scroll-snap-type: y proximity;
+            scroll-behavior: smooth
+        }
+
+        html,
+        body {
+            background: var(--cream);
+            color: var(--ink);
+            font-family: system-ui, -apple-system, sans-serif
+        }
+
+        section {
+            scroll-snap-align: start
+        }
+
+        /* ===== PAGE 1: title ===== */
+        .p1 {
+            position: relative;
+            min-height: 100svh;
+            display: grid;
+            align-items: center;
+            overflow: hidden;
+            background: var(--cream);
+            font-family: var(--wide)
+        }
+
+        .glow {
+            position: absolute;
+            left: 18%;
+            top: 28%;
+            width: 42vw;
+            height: 42vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff 0%, transparent 65%);
+            pointer-events: none
+        }
+
+        .ptitle {
+            position: relative;
+            margin-left: clamp(24px, 19vw, 300px);
+            padding-bottom: 6vh
+        }
+
+        .big {
+            position: relative;
+            isolation: isolate;
+            font-weight: 300;
+            font-size: clamp(46px, 9vw, 150px);
+            line-height: 1;
+            letter-spacing: -.04em;
+            white-space: nowrap
+        }
+
+        .fadeb {
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .08), #000 62%);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .08), #000 62%)
+        }
+
+        .o {
+            position: relative;
+            display: inline-block;
+            width: .8em;
+            height: .6em;
+            margin: 0 .05em;
+            vertical-align: baseline
+        }
+
+        .o .el {
+            position: absolute;
+            inset: -6% -8%;
+            width: 116%;
+            height: 112%;
+            overflow: visible
+        }
+
+        .o .star {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 1.6em;
+            height: 1.6em;
+            margin: -.95em 0 0 -.8em;
+            filter: blur(5px);
+            opacity: .92;
+            animation: spin 22s linear infinite;
+            z-index: -1
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .pill {
+            position: absolute;
+            left: .4%;
+            top: 78%;
+            padding: .35em 1em .4em;
+            border-radius: 99px;
+            background: #8b5cf6;
+            color: #fff;
+            font: 300 italic clamp(16px, 2.5vw, 38px)/1.1 var(--wide);
+            transform: rotate(-2.5deg);
+            white-space: nowrap
+        }
+
+        .sig {
+            margin: clamp(34px, 8vh, 90px) 0 0 -.6%;
+            font: 400 clamp(40px, 5.6vw, 84px)/1 'Pinyon Script', cursive
+        }
+
+        .hint {
+            position: absolute;
+            left: 50%;
+            bottom: 3.5vh;
+            translate: -50% 0;
+            font: 500 11px var(--mono);
+            letter-spacing: .2em;
+            opacity: .45
+        }
+
+        /* page 1 dragon */
+        .dragon {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            animation: dfade 1.6s .4s both
+        }
+
+        @keyframes dfade {
+            from {
+                opacity: 0
+            }
+        }
+
+        .ptitle {
+            z-index: 2
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .o .star {
+                animation: none
+            }
+        }
+
+        /* ===== PAGE 2: about / skills / tools ===== */
+        .p2 {
+            min-height: 100svh;
+            display: grid;
+            grid-template-columns: minmax(300px, 34%) 1fr;
+            font-family: var(--wide);
+            font-weight: 300
+        }
+
+        .ab {
+            background: var(--dark);
+            color: #fff;
+            padding: 5vh 4vw 0;
+            display: flex;
+            flex-direction: column
+        }
+
+        .ab h2 {
+            font-weight: 300;
+            font-size: clamp(58px, 8.4vw, 128px);
+            line-height: .92;
+            letter-spacing: -.04em
+        }
+
+        .ab p {
+            margin: 3.5vh 0 4vh;
+            font-size: clamp(12px, 1.05vw, 15px);
+            line-height: 1.5;
+            text-align: justify;
+            white-space: pre-line
+        }
+
+        .photo {
+            flex: 1;
+            min-height: 260px;
+            border-radius: 28px 28px 0 0;
+            overflow: hidden;
+            background: linear-gradient(160deg, #d8d4d0, #8f8a86 60%, #2b2928);
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font: 500 11px var(--mono);
+            letter-spacing: .2em
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .rt {
+            display: grid;
+            grid-template-rows: 57fr 43fr
+        }
+
+        .sk {
+            background: var(--violet);
+            color: #fff;
+            padding: 4vh 4vw
+        }
+
+        .sk h2,
+        .tl h2 {
+            font-weight: 300;
+            font-size: clamp(52px, 7vw, 108px);
+            line-height: 1;
+            letter-spacing: -.04em
+        }
+
+        .cols {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4vw;
+            margin-top: 4vh
+        }
+
+        .tag {
+            display: inline-block;
+            padding: .5em 1.1em;
+            border-radius: 99px;
+            background: var(--dark);
+            font: 300 italic clamp(14px, 1.6vw, 22px) var(--wide);
+            margin-bottom: 3vh
+        }
+
+        .sk ul {
+            list-style: none;
+            padding: 0;
+            font-size: clamp(11px, 1.05vw, 15px);
+            line-height: 1.55
+        }
+
+        .sk li {
+            padding-left: 1.1em;
+            position: relative;
+            margin-bottom: .2em
+        }
+
+        .sk li:before {
+            content: '•';
+            position: absolute;
+            left: 0
+        }
+
+        .tl {
+            background: var(--cream);
+            padding: 3vh 4vw
+        }
+
+        .tl h2 {
+            background: linear-gradient(90deg, #7c4dea, #b79cf5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            width: fit-content
+        }
+
+        .tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(12px, 1.6vw, 26px);
+            margin-top: 3vh
+        }
+
+        .tool {
+            display: grid;
+            justify-items: center;
+            gap: 8px;
+            font-size: clamp(11px, 1vw, 14px)
+        }
+
+        .tool i {
+            width: clamp(56px, 5.4vw, 78px);
+            aspect-ratio: 1;
+            border-radius: 22%;
+            display: grid;
+            place-items: center;
+            font: 500 normal clamp(18px, 2vw, 28px) var(--wide);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
+            overflow: hidden
+        }
+
+        .tool i img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        /* ===== PAGE 3: reels (loader -> wheel) ===== */
+        .reel {
+            position: relative;
+            height: 100svh;
+            overflow: hidden;
+            display: grid;
+            grid-template-rows: 84px 1fr auto;
+            padding: 0 20px;
+            background: var(--cream);
+            font-family: var(--wide);
+            font-weight: 300
+        }
+
+        .brand {
+            position: absolute;
+            left: 36px;
+            top: 26px;
+            z-index: 6;
+            font: 300 76px/1 var(--wide);
+            letter-spacing: -.05em;
+            transform-origin: 0 0;
+            pointer-events: none
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            font: 300 13px var(--wide)
+        }
+
+        .top .sp {
+            width: 150px
+        }
+
+        .top nav {
+            display: flex;
+            gap: 22px;
+            margin-right: auto;
+            opacity: 0
+        }
+
+        .top a {
+            color: inherit;
+            text-decoration: none;
+            opacity: .7
+        }
+
+        .top a:hover {
+            opacity: 1
+        }
+
+        .top .cta {
+            opacity: 0;
+            padding: .8em 1.5em;
+            border-radius: 99px;
+            background: var(--dark);
+            color: #fff;
+            opacity: 0
+        }
+
+        .top .cta:hover {
+            background: var(--violet)
+        }
+
+        .stage {
+            position: relative;
+            perspective: 2200px;
+            touch-action: pan-y;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+        .stage.drag {
+            cursor: grabbing
+        }
+
+        .bound {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: 28px;
+            pointer-events: none
+        }
+
+        .sky {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            background: radial-gradient(80% 55% at 78% 8%, #c9b3ff 0%, transparent 62%), radial-gradient(60% 45% at 12% 18%, #9a73f5 0%, transparent 60%), linear-gradient(#2a2160 0%, #5a37c4 40%, #8b5cf6 70%, #cfbcff 100%)
+        }
+
+        .bound.cl {
+            z-index: 3
+        }
+
+        .scene {
+            position: absolute;
+            inset: 0;
+            transform-style: preserve-3d;
+            will-change: transform
+        }
+
+        .card {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            display: block;
+            width: var(--w);
+            height: var(--h);
+            margin: calc(var(--h)/-2) 0 0 calc(var(--w)/-2);
+            transform-style: preserve-3d;
+            visibility: hidden;
+            will-change: transform;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            -webkit-user-drag: none
+        }
+
+        .card:focus-visible {
+            outline: 3px solid var(--violet);
+            outline-offset: 4px
+        }
+
+        .face {
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, .28)
+        }
+
+        .front img,
+        .front video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            -webkit-user-drag: none
+        }
+
+        .front video {
+            opacity: 0;
+            transition: opacity .5s
+        }
+
+        .cap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 22px 10px 9px;
+            font: 300 10px var(--wide);
+            letter-spacing: .02em;
+            background: linear-gradient(transparent, rgba(0, 0, 0, .6))
+        }
+
+        .back {
+            transform: rotateY(180deg);
+            background: radial-gradient(circle at 30% 20%, #3a3638, var(--dark));
+            display: grid;
+            place-items: center;
+            border: 1px solid #3d393b;
+            font: 400 calc(var(--w)*.5)/1 'Pinyon Script', var(--serif);
+            color: #b79cf5
+        }
+
+        .clouds {
+            position: absolute;
+            left: -5%;
+            right: -5%;
+            bottom: 0;
+            height: 52%;
+            will-change: transform;
+            transform: translate3d(0, 100%, 0);
+            visibility: hidden
+        }
+
+        .clouds i {
+            position: absolute;
+            border-radius: 50%
+        }
+
+        .clouds .base {
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 55%;
+            border-radius: 0;
+            background: linear-gradient(#faf9f6, #ebe5f8)
+        }
+
+        .copy {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 32px;
+            padding: 22px 16px 26px;
+            opacity: 0
+        }
+
+        .copy h1 {
+            font: 300 clamp(22px, 3.1vw, 46px)/1.08 var(--wide);
+            letter-spacing: -.04em;
+            max-width: 19em
+        }
+
+        .copy h1 u {
+            text-decoration-thickness: 3px;
+            text-underline-offset: 5px
+        }
+
+        .copy h1 sup {
+            font: 400 9px var(--wide);
+            margin-left: 2px;
+            color: var(--violet)
+        }
+
+        .stats {
+            display: flex;
+            gap: 34px;
+            text-align: right
+        }
+
+        .stats b {
+            display: block;
+            font: 300 clamp(24px, 3vw, 44px)/1 var(--wide);
+            letter-spacing: -.05em;
+            color: var(--violet)
+        }
+
+        .stats span {
+            font: 300 9px var(--wide);
+            letter-spacing: .16em;
+            opacity: .6
+        }
+
+        .counter {
+            position: absolute;
+            right: 40px;
+            bottom: 30px;
+            z-index: 10;
+            text-align: right;
+            transition: opacity .4s
+        }
+
+        .counter small {
+            display: block;
+            font: 300 11px var(--wide);
+            letter-spacing: .2em;
+            opacity: .6;
+            margin-bottom: 8px
+        }
+
+        .counter b {
+            font: 300 clamp(64px, 10vw, 150px)/.9 var(--wide);
+            letter-spacing: -.06em
+        }
+
+        .counter em {
+            font: 300 clamp(20px, 2.2vw, 32px) var(--wide);
+            font-style: normal;
+            margin-left: 8px;
+            color: var(--violet)
+        }
+
+        .skip {
+            position: absolute;
+            left: 36px;
+            bottom: 30px;
+            z-index: 10;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid #d6d1e6;
+            background: transparent;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--ink)
+        }
+
+        .skip:hover {
+            background: var(--violet);
+            color: #fff;
+            border-color: var(--violet)
+        }
+
+        .skip:focus-visible {
+            outline: 2px solid var(--violet);
+            outline-offset: 3px
+        }
+
+        @media (max-width:860px) {
+            .p2 {
+                grid-template-columns: 1fr
+            }
+
+            .ab {
+                padding-bottom: 0
+            }
+
+            .photo {
+                min-height: 340px
+            }
+
+            .cols {
+                grid-template-columns: 1fr
+            }
+
+            .rt {
+                grid-template-rows: auto auto
+            }
+
+            .sk,
+            .tl {
+                padding: 6vh 6vw
+            }
+
+            .ab {
+                padding: 6vh 6vw 0
+            }
+        }
+
+        @media (max-width:760px) {
+            .reel {
+                grid-template-rows: 64px 1fr auto;
+                padding: 0 10px
+            }
+
+            .brand {
+                font-size: 54px;
+                left: 20px;
+                top: 18px
+            }
+
+            .top .sp {
+                width: 96px
+            }
+
+            .top nav {
+                gap: 14px;
+                font-size: 16px
+            }
+
+            .top .cta {
+                display: none
+            }
+
+            .copy {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px
+            }
+
+            .stats {
+                text-align: left;
+                gap: 22px
+            }
+
+            .counter {
+                right: 20px
+            }
+
+            .skip {
+                left: 20px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script>
+        const h = React.createElement;
+        const { useRef, useEffect, useState } = React;
+        const { motion, animate, useMotionValue } = Motion;
+
+        /* ================= CONFIG: everything you'll want to edit ================= */
+        const NAME = 'Madhav', ROLE = 'video editor';
+        const BRAND = NAME.split(' ')[0] + '.', MONO = NAME[0];          // reel wordmark + card-back monogram
+        const PHOTO = '';                                                // url of your photo (leave '' for a placeholder)
+        const ABOUT = `I'm a creative who loves connecting with people and bringing ideas to life through visual storytelling.
+
+I specialize in video editing and content creation for brands and creators, helping them tell their stories in fresh, engaging ways. From the first cut to the final grade, I turn raw footage into scroll-stopping visuals that capture attention and emotion.`;
+        const HARD = ['Video editing for social & brand films', 'Colour grading', 'Motion graphics & titles', 'Sound design & mixing', 'Short-form storytelling & pacing'];
+        const SOFT = ['Creativity', 'Strong visual sense', 'Attention to detail', 'Responsibility', 'Adaptability', 'Self-management'];
+        const TOOLS = [                                                  // add img:'logo.png' to use a real logo
+            { n: 'capcut', t: 'CC', bg: '#fff', fg: '#111' }, { n: 'premiere', t: 'Pr', bg: '#00005b', fg: '#9999ff' },
+            { n: 'after effects', t: 'Ae', bg: '#00005b', fg: '#d291ff' }, { n: 'davinci', t: 'Dv', bg: '#151515', fg: '#f2b134' },
+            { n: 'photoshop', t: 'Ps', bg: '#001e36', fg: '#31a8ff' }, { n: 'figma', t: 'Fi', bg: '#1e1e1e', fg: '#f24e1e' },
+            { n: 'notion', t: 'N', bg: '#111', fg: '#fff' }, { n: 'midjourney', t: 'Mj', bg: '#fff', fg: '#111' }
+        ];
+        const STATS = [['12.7M+', 'VIEWS'], ['35.1K', 'FOLLOWERS'], ['120+', 'EDITS']];
+        const VIDEOS = [
+            'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+            'https://www.w3schools.com/html/mov_bbb.mp4'
+        ];
+        const ITEMS = [
+            ['Brand film', '#8b5cf6', '#1d1a2e'], ['Music video', '#b79cf5', '#2a2160'],
+            ['Short doc', '#232122', '#7c4dea'], ['Reel', '#cfbcff', '#3b2a8f'],
+            ['Commercial', '#7c4dea', '#121110'], ['Travel cut', '#9a73f5', '#232122']
+        ];
+        /* ========================================================================== */
+
+        const N = 34, STEP = 360 / N;
+        const cover = (a, b, n) => 'data:image/svg+xml,' + encodeURIComponent(
+            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 640"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="360" height="640" fill="url(#g)"/><text x="28" y="108" font-family="Georgia,serif" font-size="64" font-style="italic" fill="#fff" fill-opacity=".85">${n}</text></svg>`);
+        const CARDS = Array.from({ length: N }, (_, i) => {
+            const [t, a, b] = ITEMS[i % ITEMS.length], n = String(i + 1).padStart(2, '0');
+            return { title: `${t} ${n}`, cover: cover(a, b, n), video: VIDEOS[i % VIDEOS.length] };
+        });
+        const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+        const wrap = a => ((a + 180) % 360 + 360) % 360 - 180;
+        const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+        const lerp = (a, b, t) => a + (b - a) * t;
+        const put = (el, k, v) => { const c = el.__c || (el.__c = {}); if (c[k] === v) return; c[k] = v; el.style[k] = v; };
+
+        /* ======================================================
+           PAGE 1: title
+           ====================================================== */
+        const STAR = Array.from({ length: 32 }, (_, i) => {
+            const a = i * Math.PI / 16, r = i % 2 ? 30 : 48;
+            return (50 + r * Math.cos(a)).toFixed(1) + ',' + (50 + r * Math.sin(a)).toFixed(1);
+        }).join(' ');
+
+        /* ======================================================
+           PAGE 1 EXTRA: a dragon on a chain (canvas 2D) chasing a glowing pearl. The pearl
+           wanders the right side on its own and follows your cursor while you move it over the page.
+           ====================================================== */
+        function Dragon() {
+            const ref = useRef();
+            useEffect(() => {
+                const cv = ref.current, ctx = cv.getContext('2d'), box = cv.parentElement;
+                const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const N = 56, TAU = 6.2832, P = [], S = [], dust = [];
+                const M = { x: 0, y: 0, ex: 0, ey: 0, on: false, at: -1e9, w: 0, tx: 0, ty: 0 };
+                let W = 0, H = 0, sc = 1, len = 13, t = 0, vis = true, raf, last = performance.now();
+                const path = tt => ({ x: W * (0.7 + 0.2 * Math.sin(tt * 0.6)), y: H * (0.5 + 0.3 * Math.sin(tt * 0.95 + 1.3)) });
+                const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
+                const rgb = c => `rgb(${c.map(Math.round).join(',')})`;
+                const A = [100, 58, 208], B = [172, 140, 247], PL = [240, 233, 255];
+                const radius = i => { const k = i / (N - 1); return sc * (30 * Math.pow(1 - k, 0.8) * (0.5 + 0.5 * Math.min(1, k * 6)) + 2); };
+
+                const size = () => {
+                    const r = box.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+                    W = r.width; H = r.height; sc = clamp(W / 1440, 0.55, 1.15); len = 13 * sc;
+                    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                    const h0 = path(t); P.length = 0; M.tx = h0.x; M.ty = h0.y;
+                    for (let i = 0; i < N; i++) P.push({ x: h0.x - i * len, y: h0.y });
+                };
+
+                const step = dt => {
+                    t += dt;
+                    const pp = path(t);
+                    M.on = !reduce && performance.now() - M.at < 2500;
+                    M.w += ((M.on ? 1 : 0) - M.w) * (1 - Math.exp(-dt * 2));
+                    M.ex += (M.x - M.ex) * (1 - Math.exp(-dt * 3.5)); M.ey += (M.y - M.ey) * (1 - Math.exp(-dt * 3.5));
+                    M.tx = pp.x + (M.ex - pp.x) * M.w; M.ty = pp.y + (M.ey - pp.y) * M.w;       // the pearl it chases
+                    const k = 1 - Math.exp(-dt * 3.4);
+                    P[0].x += (M.tx - P[0].x) * k; P[0].y += (M.ty - P[0].y) * k;
+                    for (let i = 1; i < N; i++) {
+                        let dx = P[i].x - P[i - 1].x, dy = P[i].y - P[i - 1].y, d = Math.hypot(dx, dy) || 1;
+                        P[i].x = P[i - 1].x + dx / d * len; P[i].y = P[i - 1].y + dy / d * len;
+                    }
+                    if (!reduce && Math.random() < dt * 45) { const i = (Math.random() * N) | 0; dust.push({ x: P[i].x, y: P[i].y, vx: (Math.random() - 0.5) * 30, vy: -10 - Math.random() * 30, l: 1 }); }
+                    for (let i = dust.length - 1; i >= 0; i--) { const d = dust[i]; d.x += d.vx * dt; d.y += d.vy * dt; d.l -= dt / 1.3; if (d.l <= 0) dust.splice(i, 1); }
+                };
+
+                const draw = () => {
+                    ctx.clearRect(0, 0, W, H);
+                    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+                    // spine with a travelling wave so the body ripples
+                    for (let i = 0; i < N; i++) {
+                        const a = P[Math.max(0, i - 1)], b = P[Math.min(N - 1, i + 1)];
+                        let dx = a.x - b.x, dy = a.y - b.y; const d = Math.hypot(dx, dy) || 1; dx /= d; dy /= d;
+                        const nx = -dy, ny = dx, amp = sc * 5 * Math.sin(Math.PI * Math.min(1, i / (N * 0.92))), w = Math.sin(t * 4.5 - i * 0.4) * amp;
+                        S[i] = { x: P[i].x + nx * w, y: P[i].y + ny * w, dx, dy, nx, ny, r: radius(i) };
+                    }
+                    // embers
+                    ctx.fillStyle = '#cfbcff';
+                    dust.forEach(d => { ctx.globalAlpha = d.l * 0.8; ctx.beginPath(); ctx.arc(d.x, d.y, (1.2 + 2 * d.l) * sc, 0, TAU); ctx.fill(); });
+                    ctx.globalAlpha = 1;
+                    // frilly side fins
+                    ctx.fillStyle = 'rgba(207,188,255,.5)';
+                    for (let i = 3; i < N - 4; i += 2) {
+                        const s = S[i];
+                        [-1, 1].forEach(sd => {
+                            const f = s.r * (0.55 + 0.25 * Math.sin(t * 4 - i * 0.5)) + 6 * sc, g = len * 0.9;
+                            const bx = s.x + s.nx * sd * s.r * 0.9, by = s.y + s.ny * sd * s.r * 0.9;
+                            const tx = bx + s.nx * sd * f - s.dx * f * 0.9, ty = by + s.ny * sd * f - s.dy * f * 0.9;
+                            ctx.beginPath(); ctx.moveTo(bx + s.dx * g, by + s.dy * g);
+                            ctx.quadraticCurveTo(bx + s.nx * sd * f + s.dx * g * 0.2, by + s.ny * sd * f + s.dy * g * 0.2, tx, ty);
+                            ctx.quadraticCurveTo(bx - s.dx * g * 0.2, by - s.dy * g * 0.2, bx - s.dx * g, by - s.dy * g); ctx.fill();
+                        });
+                    }
+                    // legs
+                    [13, 31].forEach(i => {
+                        const s = S[i];
+                        [-1, 1].forEach(sd => {
+                            const sw = Math.sin(t * 2 + i) * 4 * sc, x0 = s.x + s.nx * sd * s.r * 0.7, y0 = s.y + s.ny * sd * s.r * 0.7;
+                            const x1 = x0 + s.nx * sd * 32 * sc - s.dx * 14 * sc + s.dx * sw, y1 = y0 + s.ny * sd * 32 * sc - s.dy * 14 * sc + s.dy * sw;
+                            ctx.strokeStyle = '#5b34c4'; ctx.lineWidth = 8 * sc * (i < 20 ? 1 : 0.8);
+                            ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(x0 + s.nx * sd * 20 * sc + s.dx * 8 * sc, y0 + s.ny * sd * 20 * sc + s.dy * 8 * sc, x1, y1); ctx.stroke();
+                            ctx.strokeStyle = '#232122'; ctx.lineWidth = 2.2 * sc;
+                            for (let c = -1; c <= 1; c++) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 + s.nx * sd * 10 * sc + s.dx * c * 8 * sc, y1 + s.ny * sd * 10 * sc + s.dy * c * 8 * sc); ctx.stroke(); }
+                        });
+                    });
+                    // glow under the body
+                    ctx.save();
+                    ctx.shadowColor = 'rgba(124,77,234,.55)'; ctx.shadowBlur = 34 * sc; ctx.fillStyle = 'rgb(124,77,234)';
+                    ctx.beginPath(); ctx.moveTo(S[0].x + S[0].nx * S[0].r, S[0].y + S[0].ny * S[0].r);
+                    for (let i = 1; i < N; i++) ctx.lineTo(S[i].x + S[i].nx * S[i].r, S[i].y + S[i].ny * S[i].r);
+                    for (let i = N - 1; i >= 0; i--) ctx.lineTo(S[i].x - S[i].nx * S[i].r, S[i].y - S[i].ny * S[i].r);
+                    ctx.closePath(); ctx.fill(); ctx.restore();
+                    // body: smooth tapered ribbon, colour runs head -> tail
+                    for (let i = N - 2; i >= 0; i--) {
+                        const a = S[i], b = S[i + 1], col = rgb(mix(A, B, i / (N - 1)));
+                        ctx.beginPath();
+                        ctx.moveTo(a.x + a.nx * a.r, a.y + a.ny * a.r); ctx.lineTo(b.x + b.nx * b.r, b.y + b.ny * b.r);
+                        ctx.lineTo(b.x - b.nx * b.r, b.y - b.ny * b.r); ctx.lineTo(a.x - a.nx * a.r, a.y - a.ny * a.r); ctx.closePath();
+                        ctx.fillStyle = col; ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.fill(); ctx.stroke();
+                    }
+                    // belly plates down the middle
+                    for (let i = N - 2; i >= 1; i--) {
+                        const a = S[i], b = S[i + 1], col = rgb(mix(mix(A, B, i / (N - 1)), PL, i % 2 ? 0.58 : 0.4)), ka = 0.52;
+                        ctx.beginPath();
+                        ctx.moveTo(a.x + a.nx * a.r * ka, a.y + a.ny * a.r * ka); ctx.lineTo(b.x + b.nx * b.r * ka, b.y + b.ny * b.r * ka);
+                        ctx.lineTo(b.x - b.nx * b.r * ka, b.y - b.ny * b.r * ka); ctx.lineTo(a.x - a.nx * a.r * ka, a.y - a.ny * a.r * ka); ctx.closePath();
+                        ctx.fillStyle = col; ctx.fill();
+                    }
+                    // scale crescents on both flanks
+                    ctx.strokeStyle = 'rgba(18,17,16,.22)'; ctx.lineWidth = 1.2 * sc;
+                    for (let i = 2; i < N - 3; i++) {
+                        const s = S[i], ang = Math.atan2(s.dy, s.dx) + Math.PI;
+                        [-1, 1].forEach(sd => { ctx.beginPath(); ctx.arc(s.x + s.nx * sd * s.r * 0.76, s.y + s.ny * sd * s.r * 0.76, s.r * 0.26, ang - 1.2, ang + 1.2); ctx.stroke(); });
+                    }
+                    // dorsal studs
+                    ctx.fillStyle = 'rgba(35,33,34,.6)';
+                    for (let i = 3; i < N - 3; i += 2) {
+                        const s = S[i], q = Math.max(2, s.r * 0.2);
+                        ctx.beginPath(); ctx.moveTo(s.x + s.dx * q * 1.5, s.y + s.dy * q * 1.5); ctx.lineTo(s.x + s.nx * q * 0.6, s.y + s.ny * q * 0.6);
+                        ctx.lineTo(s.x - s.dx * q * 1.5, s.y - s.dy * q * 1.5); ctx.lineTo(s.x - s.nx * q * 0.6, s.y - s.ny * q * 0.6); ctx.closePath(); ctx.fill();
+                    }
+                    // tail plume
+                    {
+                        const e = S[N - 1], a0 = Math.atan2(-e.dy, -e.dx);
+                        [-1, 0, 1].forEach(j => {
+                            ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(a0 + j * 0.55 + Math.sin(t * 5 + j) * 0.22);
+                            ctx.fillStyle = j ? 'rgba(207,188,255,.75)' : 'rgba(124,77,234,.85)';
+                            ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(22 * sc, -9 * sc, 50 * sc, 0); ctx.quadraticCurveTo(22 * sc, 9 * sc, 0, 0); ctx.fill(); ctx.restore();
+                        });
+                    }
+                    // head
+                    {
+                        const ang = Math.atan2(S[0].y - S[1].y, S[0].x - S[1].x);
+                        ctx.save(); ctx.translate(S[0].x, S[0].y); ctx.rotate(ang); ctx.scale(sc * 1.25, sc * 1.25);
+                        for (let j = -2; j <= 2; j++) {                                              // flowing mane
+                            ctx.beginPath(); ctx.moveTo(-12, j * 4);
+                            ctx.bezierCurveTo(-30, j * 8 + Math.sin(t * 5 + j) * 7, -52, j * 13 + Math.sin(t * 5 + j + 1.5) * 11, -80, j * 17 + Math.sin(t * 5 + j + 3) * 15);
+                            ctx.strokeStyle = j % 2 ? 'rgba(207,188,255,.85)' : 'rgba(160,125,245,.85)'; ctx.lineWidth = 3.6 - Math.abs(j) * 0.6; ctx.stroke();
+                        }
+                        [-1, 1].forEach(sd => {                                                      // antlers
+                            ctx.beginPath(); ctx.moveTo(-4, sd * 12); ctx.bezierCurveTo(-14, sd * 27, -30, sd * 31, -46, sd * 25);
+                            ctx.moveTo(-22, sd * 29); ctx.lineTo(-28, sd * 44); ctx.moveTo(-36, sd * 29); ctx.lineTo(-44, sd * 40);
+                            ctx.strokeStyle = '#232122'; ctx.lineWidth = 5; ctx.stroke(); ctx.strokeStyle = '#cfbcff'; ctx.lineWidth = 2; ctx.stroke();
+                            const w = Math.sin(t * 4 + sd) * 8;                                        // whiskers
+                            ctx.beginPath(); ctx.moveTo(26, sd * 6); ctx.bezierCurveTo(30, sd * 30, 4 + w, sd * 42, -24 + w * 1.5, sd * (46 + w));
+                            ctx.strokeStyle = '#e4d9ff'; ctx.lineWidth = 2.2; ctx.stroke();
+                        });
+                        const g = ctx.createLinearGradient(-20, 0, 38, 0); g.addColorStop(0, '#7c4dea'); g.addColorStop(1, '#b79cf5');
+                        ctx.fillStyle = g; ctx.strokeStyle = 'rgba(35,33,34,.35)'; ctx.lineWidth = 1.4;
+                        ctx.beginPath(); ctx.moveTo(40, 0); ctx.bezierCurveTo(36, -9, 18, -19, -4, -19); ctx.bezierCurveTo(-18, -19, -23, -8, -22, 0);
+                        ctx.bezierCurveTo(-23, 8, -18, 19, -4, 19); ctx.bezierCurveTo(18, 19, 36, 9, 40, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
+                        [-1, 1].forEach(sd => {
+                            ctx.strokeStyle = '#232122'; ctx.lineWidth = 2.6;                          // brow ridge
+                            ctx.beginPath(); ctx.moveTo(14, sd * 13); ctx.quadraticCurveTo(4, sd * 17, -6, sd * 10); ctx.stroke();
+                            ctx.fillStyle = '#232122'; ctx.beginPath(); ctx.ellipse(35, sd * 3.6, 1.6, 1, 0, 0, TAU); ctx.fill();   // nostril
+                            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.moveTo(30, sd * 7.5); ctx.lineTo(34, sd * 12.5); ctx.lineTo(25, sd * 10); ctx.closePath(); ctx.fill(); // fang
+                            const gl = ctx.createRadialGradient(8, sd * 10, 0, 8, sd * 10, 12);        // glowing eye
+                            gl.addColorStop(0, 'rgba(255,255,255,.9)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+                            ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(8, sd * 10, 12, 0, TAU); ctx.fill();
+                            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.ellipse(8, sd * 10, 5, 3.6, sd * 0.35, 0, TAU); ctx.fill();
+                            ctx.fillStyle = '#232122'; ctx.beginPath(); ctx.ellipse(9, sd * 10, 1.3, 3.1, 0, 0, TAU); ctx.fill();
+                        });
+                        ctx.restore();
+                    }
+                    // the pearl it is chasing (also your cursor while you move over the page)
+                    {
+                        const pr = 22 * sc * (1 + 0.12 * Math.sin(t * 3)), g = ctx.createRadialGradient(M.tx, M.ty, 0, M.tx, M.ty, pr * 2.4);
+                        g.addColorStop(0, 'rgba(255,255,255,.95)'); g.addColorStop(0.25, 'rgba(207,188,255,.75)'); g.addColorStop(1, 'rgba(124,77,234,0)');
+                        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(M.tx, M.ty, pr * 2.4, 0, TAU); ctx.fill();
+                        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(M.tx, M.ty, 7 * sc, 0, TAU); ctx.fill();
+                    }
+                };
+
+                size();
+                const settle = () => { for (let i = 0; i < 500; i++) step(0.016); draw(); };
+                const ro = new ResizeObserver(() => { size(); if (reduce) settle(); });
+                ro.observe(box);
+                const io = new IntersectionObserver(([e]) => { vis = e.isIntersecting; }); io.observe(box);
+                const pm = e => {
+                    const r = box.getBoundingClientRect();
+                    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
+                    if (!M.on) { M.ex = M.tx; M.ey = M.ty; }
+                    M.x = e.clientX - r.left; M.y = e.clientY - r.top; M.at = performance.now();
+                };
+                window.addEventListener('pointermove', pm);
+                if (reduce) settle();
+                else {
+                    const tick = now => {
+                        const dt = Math.min(0.05, (now - last) / 1000); last = now;
+                        if (vis) { step(dt); draw(); }
+                        raf = requestAnimationFrame(tick);
+                    };
+                    raf = requestAnimationFrame(tick);
+                }
+                return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); window.removeEventListener('pointermove', pm); };
+            }, []);
+            return h('canvas', { ref, className: 'dragon', 'aria-hidden': true });
+        }
+
+        function Intro() {
+            const rise = d => ({ initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 }, transition: { duration: 1, delay: d, ease: [0.2, 0.7, 0.2, 1] } });
+            return h('section', { className: 'p1', id: 'top' },
+                h('div', { className: 'glow' }),
+                h(Dragon),
+                h('div', { className: 'ptitle' },
+                    h(motion.h1, { className: 'big', 'aria-label': 'portfolio', ...rise(0.1) },
+                        h('span', { 'aria-hidden': true }, 'port', h('span', { className: 'fadeb' }, 'f')),
+                        h('span', { className: 'o', 'aria-hidden': true },
+                            h('svg', { className: 'star', viewBox: '0 0 100 100' }, h('polygon', { points: STAR, fill: '#8b5cf6' })),
+                            h('svg', { className: 'el', viewBox: '0 0 100 62' }, h('ellipse', { cx: 50, cy: 31, rx: 46, ry: 26, fill: 'none', stroke: '#121110', strokeWidth: 5, transform: 'rotate(-32 50 31)' }))),
+                        h('span', { 'aria-hidden': true }, 'lio')),
+                    h(motion.div, { className: 'pill', initial: { opacity: 0, scale: 0.6, rotate: -8 }, animate: { opacity: 1, scale: 1, rotate: -2.5 }, transition: { type: 'spring', stiffness: 220, damping: 14, delay: 0.7 } }, ROLE),
+                    h(motion.div, { className: 'sig', ...rise(1.0) }, NAME)),
+                h('div', { className: 'hint' }, 'SCROLL ↓'));
+        }
+
+        /* ======================================================
+           PAGE 2: about / skills / tools
+           ====================================================== */
+        function About() {
+            const vi = (d = 0) => ({ initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.25 }, transition: { duration: 0.9, delay: d, ease: 'easeOut' } });
+            return h('section', { className: 'p2', id: 'about' },
+                h('div', { className: 'ab' },
+                    h(motion.h2, vi(), 'about', h('br'), 'me'),
+                    h(motion.p, vi(0.1), ABOUT),
+                    h('div', { className: 'photo' }, PHOTO ? h('img', { src: PHOTO, alt: NAME }) : 'YOUR PHOTO')),
+                h('div', { className: 'rt' },
+                    h('div', { className: 'sk' },
+                        h(motion.h2, vi(), 'skills'),
+                        h('div', { className: 'cols' },
+                            h(motion.div, vi(0.1), h('span', { className: 'tag' }, 'hard'), h('ul', null, HARD.map(s => h('li', { key: s }, s)))),
+                            h(motion.div, vi(0.2), h('span', { className: 'tag' }, 'soft'), h('ul', null, SOFT.map(s => h('li', { key: s }, s)))))),
+                    h('div', { className: 'tl' },
+                        h(motion.h2, vi(), 'tools'),
+                        h('div', { className: 'tools' }, TOOLS.map((t, i) =>
+                            h(motion.div, { key: t.n, className: 'tool', ...vi(0.05 * i) },
+                                h('i', { style: { background: t.bg, color: t.fg } }, t.img ? h('img', { src: t.img, alt: '' }) : t.t),
+                                h('span', null, t.n)))))));
+        }
+
+        /* ======================================================
+           PAGE 3: reels. 1. POSE
+           translate3d(0,pivotY,depth) rotateZ(angle) translate3d(0,-radius,0) rotateY(flip) scale(s)
+           ====================================================== */
+        function pose(i, deal, lift, rot, k) {
+            const home = i * STEP;
+            const order = Math.abs(wrap(home)) / 180;
+            /* 2. THE DEAL */
+            const p = easeOutCubic(clamp((deal - order * 0.6) / 0.4));
+            /* 3. THE LIFT */
+            const radius = lerp(580, 1010, lift) * k * p;
+            const pivotY = lerp(500, 814, lift) * k + 140 * k * (1 - p);
+            const angle = home + rot + 70 * (1 - p);
+            const a = wrap(angle);
+            const depth = -Math.abs(a) * 1.2 * k;
+            const flip = 180 * (1 - p);
+            const s = (0.7 + 0.3 * p) * (1 + 0.35 * lift);
+            return {
+                p, a, visible: p > 0 && Math.abs(a) <= 100,
+                transform: `translate3d(0,${pivotY.toFixed(1)}px,${depth.toFixed(1)}px) rotateZ(${angle.toFixed(3)}deg) translate3d(0,${(-radius).toFixed(1)}px,0) rotateY(${flip.toFixed(2)}deg) scale(${s.toFixed(4)})`
+            };
+        }
+
+        function ReelHero() {
+            const secRef = useRef(), stageRef = useRef(), sceneRef = useRef(), skyRef = useRef(), cloudsRef = useRef(), numRef = useRef();
+            const deal = useMotionValue(0), lift = useMotionValue(0);
+            const S = useRef({ cur: 0, target: 0, vel: 0, drag: false, dragged: false, k: 1, real: 0, shown: 0 }).current;
+            const skipRef = useRef(() => { }), doneRef = useRef(false), liveRef = useRef(false);
+            const [ui, setUi] = useState({ on: false, delay: 1, instant: false });
+            const [started, setStarted] = useState(false), [done, setDone] = useState(false);
+            const reduce = useRef(typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches).current;
+
+            /* one rAF loop: poses, frame, world, counter, video */
+            useEffect(() => {
+                const stage = stageRef.current;
+                const cards = [...stage.querySelectorAll('.card')];
+                const vids = cards.map(c => c.querySelector('video'));
+                const playing = cards.map(() => false);
+                vids.forEach(v => { v.muted = true; v.addEventListener('playing', () => { v.style.opacity = 1; }); });
+                const ro = new ResizeObserver(() => {
+                    const r = stage.getBoundingClientRect();
+                    S.k = clamp(r.height / 900, 0.45, 1.2);
+                    const w = 150 * S.k;
+                    stage.style.setProperty('--w', w + 'px');
+                    stage.style.setProperty('--h', (w * 16 / 9) + 'px');
+                });
+                ro.observe(stage);
+
+                let last = performance.now(), raf;
+                const tick = now => {
+                    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+                    const d = deal.get(), l = lift.get();
+                    if (!reduce) { const dr = -7 * l * dt; S.cur += dr; S.target += dr; }
+                    if (!S.drag) { S.target += S.vel * dt; S.vel *= Math.exp(-dt * 3.2); }
+                    S.cur += (S.target - S.cur) * (1 - Math.exp(-dt * 9));
+
+                    const rot = S.cur - 28 * l;
+                    put(sceneRef.current, 'transform', `rotateX(${(12 * l).toFixed(3)}deg) scale(${(1 + 0.14 * l).toFixed(4)})`);
+                    put(stage, 'clipPath', `inset(${(-(1 - l) * 700).toFixed(1)}px round ${(28 * l).toFixed(1)}px)`);
+                    put(skyRef.current, 'opacity', l.toFixed(3));
+                    put(cloudsRef.current, 'visibility', l > 0 ? 'visible' : 'hidden');
+                    put(cloudsRef.current, 'transform', `translate3d(0,${((1 - l) * 100).toFixed(2)}%,0)`);
+
+                    // counter follows the deal but never runs ahead of the real asset progress
+                    const target = Math.min(S.real, Math.round(d * 100));
+                    S.shown += (target - S.shown) * (1 - Math.exp(-dt * 10));
+                    if (target >= 100 && S.shown > 99.4) S.shown = 100;
+                    const txt = String(Math.round(S.shown)).padStart(3, '0');
+                    if (numRef.current && numRef.current.__t !== txt) { numRef.current.__t = txt; numRef.current.textContent = txt; }
+
+                    for (let i = 0; i < N; i++) {
+                        const P = pose(i, d, l, rot, S.k), el = cards[i];
+                        put(el, 'visibility', P.visible ? 'visible' : 'hidden');
+                        if (P.visible) put(el, 'transform', P.transform);
+                        /* 4. VIDEO: after lift > .6, only cards within 40deg of the top play */
+                        const want = !reduce && l > 0.6 && P.visible && Math.abs(P.a) <= 40;
+                        if (want !== playing[i]) {
+                            playing[i] = want;
+                            const v = vids[i];
+                            if (want) { const pr = v.play(); if (pr) pr.catch(() => { playing[i] = false; }); } else v.pause();
+                        }
+                    }
+                    raf = requestAnimationFrame(tick);
+                };
+                raf = requestAnimationFrame(tick);
+                return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+            }, []);
+
+            /* entrance: assets load on page load; the deal waits until this page is in view, then deal -> lift */
+            useEffect(() => {
+                const finish = () => { doneRef.current = true; S.real = 100; setDone(true); };
+                if (reduce) { deal.set(1); lift.set(1); setUi({ on: true, delay: 0, instant: true }); finish(); return; }
+
+                let skipped = false, dealAnim, liftAnim, inView = false, coversReady = false, dealStarted = false, dealDone = false, ready = false, lifting = false;
+                const startLift = () => {
+                    if (lifting || skipped) return; lifting = true;
+                    setUi({ on: true, delay: 1, instant: false });
+                    liftAnim = animate(lift, 1, { duration: 1.9, ease: [0.5, 0, 0.15, 1], onComplete: finish });
+                };
+                const maybeLift = () => { if (dealDone && ready) startLift(); };
+                const tryDeal = () => {
+                    if (!inView || !coversReady || dealStarted || skipped) return; dealStarted = true;
+                    liveRef.current = true; setStarted(true);
+                    dealAnim = animate(deal, 1, { duration: 2.6, ease: 'linear', onComplete: () => { dealDone = true; maybeLift(); } });
+                };
+                skipRef.current = () => {
+                    if (doneRef.current || !liveRef.current) return; skipped = true;
+                    dealAnim && dealAnim.stop(); liftAnim && liftAnim.stop();
+                    deal.set(1); lift.set(1); setUi({ on: true, delay: 0, instant: true }); finish();
+                };
+
+                const imgs = [...document.querySelectorAll('.cover')];
+                const total = imgs.length + VIDEOS.length; let n = 0;
+                const bump = () => { S.real = Math.round(++n / total * 100); };
+                const covers = Promise.all(imgs.map(im => (im.decode ? im.decode() : Promise.resolve()).catch(() => { }).then(bump)));
+                const previews = Promise.all(VIDEOS.map(src => new Promise(res => {
+                    const v = document.createElement('video'); let fin = false;
+                    const ok = () => { if (fin) return; fin = true; bump(); res(); };
+                    v.preload = 'metadata'; v.muted = true;
+                    v.addEventListener('loadedmetadata', ok); v.addEventListener('error', ok);
+                    setTimeout(ok, 5000); v.src = src;
+                })));
+                covers.then(() => { coversReady = true; tryDeal(); });
+                Promise.all([covers, previews]).then(() => { ready = true; maybeLift(); });
+
+                const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { inView = true; tryDeal(); io.disconnect(); } }, { threshold: 0.6 });
+                io.observe(secRef.current);
+
+                const onKey = e => { if (e.key === 'Escape' || e.key === 'Tab') skipRef.current(); };
+                window.addEventListener('keydown', onKey);
+                return () => { window.removeEventListener('keydown', onKey); io.disconnect(); };
+            }, []);
+
+            /* 5. GESTURES: drag, swipe, horizontal wheel -> target angle (vertical wheel scrolls the page) */
+            useEffect(() => {
+                const stage = stageRef.current, DEG_PER_PX = 0.09;
+                let down = false, startX = 0, lastX = 0, lastT = 0;
+                const pd = e => {
+                    if (e.button > 0) return;
+                    down = true; S.drag = true; S.vel = 0; S.dragged = false;
+                    startX = lastX = e.clientX; lastT = performance.now(); stage.classList.add('drag');
+                };
+                const pm = e => {
+                    if (!down) return;
+                    const now = performance.now(), dd = (e.clientX - lastX) * DEG_PER_PX;
+                    if (Math.abs(e.clientX - startX) > 5) S.dragged = true;
+                    S.target += dd;
+                    const dt = Math.max(1, now - lastT) / 1000;
+                    S.vel = S.vel * 0.6 + (dd / dt) * 0.4;
+                    lastX = e.clientX; lastT = now;
+                };
+                const pu = () => {
+                    if (!down) return; down = false; S.drag = false; stage.classList.remove('drag');
+                    if (performance.now() - lastT > 80) S.vel = 0;
+                    S.vel = clamp(S.vel, -700, 700);
+                };
+                const wheel = e => {
+                    const horiz = Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey;
+                    if (!horiz) return;                                          // let vertical scroll move the page
+                    e.preventDefault();
+                    S.target -= (e.deltaX || e.deltaY) * 0.04;
+                };
+                stage.addEventListener('pointerdown', pd);
+                window.addEventListener('pointermove', pm);
+                window.addEventListener('pointerup', pu);
+                window.addEventListener('pointercancel', pu);
+                stage.addEventListener('wheel', wheel, { passive: false });
+                return () => {
+                    stage.removeEventListener('pointerdown', pd); window.removeEventListener('pointermove', pm);
+                    window.removeEventListener('pointerup', pu); window.removeEventListener('pointercancel', pu);
+                    stage.removeEventListener('wheel', wheel);
+                };
+            }, []);
+
+            const fade = y => ({
+                initial: false,
+                animate: { opacity: ui.on ? 1 : 0, y: ui.on ? 0 : y },
+                transition: { duration: ui.instant ? 0 : 0.9, delay: ui.delay, ease: 'easeOut' }
+            });
+            const blobs = [[-6, 30, 34, 70], [14, 24, 30, 80], [32, 14, 34, 85], [52, 22, 32, 78], [70, 12, 34, 82], [88, 26, 28, 70]];
+            const tones = ['#ffffff', '#faf9f6', '#f1ecfb'];
+            const U = (c, t, n) => h('span', null, h('u', { style: { textDecorationColor: c } }, t), h('sup', null, n));
+
+            return h('section', { className: 'reel', id: 'reel', ref: secRef },
+                h(motion.div, {
+                    className: 'brand', initial: false, animate: { scale: ui.on ? 0.42 : 1 },
+                    transition: { duration: ui.instant ? 0 : 1.5, ease: [0.5, 0, 0.15, 1] }
+                }, BRAND),
+                h('header', { className: 'top' },
+                    h('span', { className: 'sp' }),
+                    h(motion.nav, fade(-10), h('a', { href: '#top' }, 'Intro'), h('a', { href: '#about' }, 'About'), h('a', { href: '#reel' }, 'Reels')),
+                    h(motion.a, { className: 'cta', href: '#contact', ...fade(-10) }, "Let's talk")),
+                h('div', {
+                    className: 'stage', ref: stageRef,
+                    onClickCapture: e => { if (S.dragged) { e.preventDefault(); e.stopPropagation(); S.dragged = false; } }
+                },
+                    h('div', { className: 'bound' }, h('div', { className: 'sky', ref: skyRef })),
+                    h('div', { className: 'scene', ref: sceneRef },
+                        CARDS.map((c, i) => h('a', { key: i, className: 'card', href: '#work-' + (i + 1), draggable: false, 'aria-label': c.title + ' – watch project' },
+                            h('div', { className: 'face front' },
+                                h('img', { className: 'cover', src: c.cover, alt: '', draggable: false }),
+                                h('video', { src: c.video, loop: true, muted: true, playsInline: true, preload: 'none', tabIndex: -1, 'aria-hidden': true }),
+                                h('div', { className: 'cap' }, c.title)),
+                            h('div', { className: 'face back', 'aria-hidden': true }, MONO)))),
+                    h('div', { className: 'bound cl' },
+                        h('div', { className: 'clouds', ref: cloudsRef },
+                            h('i', { className: 'base' }),
+                            blobs.map((b, i) => h('i', { key: i, style: { left: b[0] + '%', bottom: b[1] + '%', width: b[2] + '%', height: b[3] + '%', background: tones[i % 3] } }))))),
+                h(motion.div, { className: 'copy', ...fade(20) },
+                    h('h1', null, 'I cut films for ', U('#7c4dea', 'brands', '01'), ', reels for ', U('#232122', 'creators', '02'), ' and trailers for ', U('#b79cf5', 'stories', '03'), '.'),
+                    h('div', { className: 'stats' }, STATS.map(([v, l]) => h('div', { key: l }, h('b', null, v), h('span', null, l))))),
+                !done && h('div', { className: 'counter', style: { opacity: ui.on ? 0 : 1 } },
+                    h('small', null, 'LOADING REELS'), h('b', { ref: numRef }, '000'), h('em', null, '%')),
+                started && !done && h('button', { className: 'skip', 'aria-label': 'Skip intro', title: 'Skip intro', onClick: () => skipRef.current() }, '↗'));
+        }
+
+        function Site() { return h(React.Fragment, null, h(Intro), h(About), h(ReelHero)); }
+        ReactDOM.createRoot(document.getElementById('root')).render(h(Site));
+    </script>
+</body>
+
+</html>
