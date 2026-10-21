@@ -422,7 +422,7 @@
             gap: 26px;
             padding: 14px 22px 16px;
             border-radius: 22px;
-            background: rgba(250, 249, 246, .62);
+            background: rgba(250, 249, 246, .72);
             -webkit-backdrop-filter: blur(14px);
             backdrop-filter: blur(14px);
             pointer-events: none;
@@ -431,22 +431,23 @@
 
         .sel small {
             display: block;
-            font: 300 10px var(--wide);
-            letter-spacing: .18em;
+            font: 400 10px var(--serif);
+            letter-spacing: .14em;
             text-transform: uppercase;
-            opacity: .6;
+            opacity: .55;
             margin-bottom: 6px
         }
 
         .sel b {
             display: block;
             font: 300 clamp(24px, 3.6vw, 54px)/1 var(--wide);
-            letter-spacing: -.05em
+            letter-spacing: -.04em;
+            color: var(--violet)
         }
 
         .sel em {
-            font: 300 12px var(--wide);
-            font-style: normal;
+            font: 400 12px var(--serif);
+            font-style: italic;
             color: var(--violet);
             white-space: nowrap;
             padding-bottom: 4px
@@ -530,7 +531,8 @@
             color: #fff;
             text-decoration: none;
             border-radius: 10px;
-            -webkit-user-drag: none
+            -webkit-user-drag: none;
+            cursor: pointer
         }
 
         .card:focus-visible {
@@ -545,7 +547,14 @@
             overflow: hidden;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            box-shadow: 0 14px 34px rgba(0, 0, 0, .28)
+            box-shadow: 0 14px 34px rgba(0, 0, 0, .28);
+            transition: box-shadow 0.25s ease, outline 0.25s ease
+        }
+
+        .card:hover .face {
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .45), 0 0 24px rgba(139, 92, 246, 0.55);
+            outline: 2px solid rgba(139, 92, 246, 0.75);
+            outline-offset: -2px
         }
 
         .front img,
@@ -751,7 +760,20 @@
             overflow: hidden;
             box-shadow: 0 14px 34px rgba(0,0,0,.28);
             flex-shrink: 0;
-            cursor: pointer
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, outline 0.25s ease
+        }
+
+        .spread-card:hover {
+            transform: translateY(-8px) scale(1.025);
+            box-shadow: 0 22px 48px rgba(0, 0, 0, .45), 0 0 26px rgba(139, 92, 246, 0.6);
+            outline: 2px solid rgba(139, 92, 246, 0.8);
+            outline-offset: -2px
+        }
+
+        .spread-card:focus-visible {
+            outline: 3px solid var(--violet);
+            outline-offset: 4px
         }
 
         .spread-card img,
@@ -864,6 +886,166 @@
                 left: 20px
             }
         }
+
+        /* ===== YOUTUBE PREVIEW MODAL ===== */
+        .yt-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(14, 12, 19, 0.88);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            backdrop-filter: blur(24px) saturate(180%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(14px, 3vw, 36px);
+            cursor: pointer;
+            animation: ytFadeIn 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes ytFadeIn {
+            from { opacity: 0 }
+            to { opacity: 1 }
+        }
+
+        .yt-modal-dialog {
+            position: relative;
+            cursor: default;
+            background: #121018;
+            border-radius: 22px;
+            /* Good glowing border for preview */
+            border: 2px solid #8b5cf6;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.16),
+                0 0 30px rgba(139, 92, 246, 0.55),
+                0 0 80px rgba(124, 77, 234, 0.32),
+                0 30px 80px -10px rgba(0, 0, 0, 0.95);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: ytPopIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform-origin: center center;
+            max-height: 94vh;
+        }
+
+        @keyframes ytPopIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .yt-dialog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 18px;
+            background: rgba(22, 19, 30, 0.96);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.28);
+            gap: 16px;
+            z-index: 2;
+        }
+
+        .yt-dialog-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .yt-dialog-tag {
+            font: 500 10px/1.2 var(--wide);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #cfbcff;
+            background: rgba(124, 77, 234, 0.25);
+            border: 1px solid rgba(139, 92, 246, 0.45);
+            padding: 4px 10px;
+            border-radius: 99px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .yt-dialog-title {
+            font: 300 15px/1.2 var(--wide);
+            letter-spacing: -0.02em;
+            color: #faf9f6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .yt-dialog-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: #faf9f6;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            font-size: 15px;
+            line-height: 1;
+            flex-shrink: 0;
+            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .yt-dialog-close:hover {
+            background: var(--violet);
+            border-color: #8b5cf6;
+            color: #fff;
+            transform: scale(1.12);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+        }
+
+        .yt-dialog-close:focus-visible {
+            outline: 2px solid var(--violet);
+            outline-offset: 2px;
+        }
+
+        .yt-video-wrap {
+            position: relative;
+            background: #000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .yt-video-wrap.is-short {
+            width: min(calc((84vh - 64px) * 9 / 16), 86vw);
+            aspect-ratio: 9 / 16;
+        }
+
+        .yt-video-wrap.is-wide {
+            width: min(960px, 88vw, calc((84vh - 64px) * 16 / 9));
+            aspect-ratio: 16 / 9;
+        }
+
+        .yt-iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .yt-dismiss-hint {
+            text-align: center;
+            padding: 8px 12px;
+            font: 300 11px var(--wide);
+            letter-spacing: 0.12em;
+            color: rgba(255, 255, 255, 0.45);
+            background: rgba(18, 16, 24, 0.85);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -907,34 +1089,34 @@ I specialize in video editing and content creation for brands and creators, help
         /* WORK: real portfolio videos */
         const WORK = [
             // Cinematics
-            { cat: 'cinematics', title: 'Cooking',               cover: cover('#8b5cf6','#1d1a2e','C1'), video: 'portfolio_previews/cinematics/Cooking_preview.mp4' },
-            { cat: 'cinematics', title: 'Gym Cinematics',         cover: cover('#8b5cf6','#1d1a2e','C2'), video: 'portfolio_previews/cinematics/Gym_Cinematics_preview.mp4' },
-            { cat: 'cinematics', title: 'Gym GOT Edit',           cover: cover('#8b5cf6','#1d1a2e','C3'), video: 'portfolio_previews/cinematics/Gym_GOTed_preview.mp4' },
-            { cat: 'cinematics', title: 'Urban Monkey Commercial',cover: cover('#8b5cf6','#1d1a2e','C4'), video: 'portfolio_previews/cinematics/UrbanMonkeyCommercial_preview.mp4' },
+            { cat: 'cinematics', title: 'Cooking',                cover: cover('#8b5cf6','#1d1a2e','C1'), video: 'portfolio_previews/cinematics/Cooking_preview.mp4', yt: 'https://youtu.be/Fg8EH5j1GG0' },
+            { cat: 'cinematics', title: 'Gym Cinematics',         cover: cover('#8b5cf6','#1d1a2e','C2'), video: 'portfolio_previews/cinematics/Gym_Cinematics_preview.mp4', yt: 'https://youtube.com/shorts/nOeJmo30L5M?feature=share' },
+            { cat: 'cinematics', title: 'Gym GOT Edit',           cover: cover('#8b5cf6','#1d1a2e','C3'), video: 'portfolio_previews/cinematics/Gym_GOTed_preview.mp4', yt: 'https://youtube.com/shorts/SOss9ouGvCQ?feature=share' },
+            { cat: 'cinematics', title: 'Urban Monkey Commercial',cover: cover('#8b5cf6','#1d1a2e','C4'), video: 'portfolio_previews/cinematics/UrbanMonkeyCommercial_preview.mp4', yt: 'https://youtu.be/5JaQS8f1dsE' },
             // Motivation
-            { cat: 'motivation', title: 'Before & After',         cover: cover('#b79cf5','#2a2160','M1'), video: 'portfolio_previews/Motivationsl/Before Aftermp4_preview.mp4' },
-            { cat: 'motivation', title: 'Iman – Create',          cover: cover('#b79cf5','#2a2160','M2'), video: 'portfolio_previews/Motivationsl/Iman tells us why you need to create and not just-_preview.mp4' },
-            { cat: 'motivation', title: 'Kobe – Consistency',     cover: cover('#b79cf5','#2a2160','M3'), video: 'portfolio_previews/Motivationsl/Kobe Bryant_ The Consistency of Work_2_preview.mp4' },
-            { cat: 'motivation', title: 'Nested Sequence',        cover: cover('#b79cf5','#2a2160','M4'), video: 'portfolio_previews/Motivationsl/Nested Sequence 03_2_preview.mp4' },
-            { cat: 'motivation', title: 'One Shot Motiv',         cover: cover('#b79cf5','#2a2160','M5'), video: 'portfolio_previews/Motivationsl/oneSHoT_Motiv_preview.mp4' },
+            { cat: 'motivation', title: 'Before & After',         cover: cover('#b79cf5','#2a2160','M1'), video: 'portfolio_previews/Motivationsl/Before Aftermp4_preview.mp4', yt: 'https://youtube.com/shorts/zkSUoHCzGZM?feature=share' },
+            { cat: 'motivation', title: 'Iman – Create',          cover: cover('#b79cf5','#2a2160','M2'), video: 'portfolio_previews/Motivationsl/Iman tells us why you need to create and not just-_preview.mp4', yt: 'https://youtube.com/shorts/vChpWD-euaQ?feature=share' },
+            { cat: 'motivation', title: 'Kobe – Consistency',     cover: cover('#b79cf5','#2a2160','M3'), video: 'portfolio_previews/Motivationsl/Kobe Bryant_ The Consistency of Work_2_preview.mp4', yt: 'https://youtube.com/shorts/XQxfHCqOXeg?feature=share' },
+            { cat: 'motivation', title: 'Nested Sequence',        cover: cover('#b79cf5','#2a2160','M4'), video: 'portfolio_previews/Motivationsl/Nested Sequence 03_2_preview.mp4', yt: 'https://youtube.com/shorts/7swe-5dfb6I?feature=share' },
+            { cat: 'motivation', title: 'One Shot Motiv',         cover: cover('#b79cf5','#2a2160','M5'), video: 'portfolio_previews/Motivationsl/oneSHoT_Motiv_preview.mp4', yt: 'https://youtube.com/shorts/BpdqjK6hgJk?feature=share' },
             // Transitions
-            { cat: 'transitions', title: 'Idli Meme',             cover: cover('#232122','#7c4dea','T1'), video: 'portfolio_previews/Transitions/idli 1with meme_preview.mp4' },
-            { cat: 'transitions', title: 'Milkshake',             cover: cover('#232122','#7c4dea','T2'), video: 'portfolio_previews/Transitions/milkshake transition_preview.mp4' },
-            { cat: 'transitions', title: 'Oats',                  cover: cover('#232122','#7c4dea','T3'), video: 'portfolio_previews/Transitions/oats transition_preview.mp4' },
+            { cat: 'transitions', title: 'Idli Meme',             cover: cover('#232122','#7c4dea','T1'), video: 'portfolio_previews/Transitions/idli 1with meme_preview.mp4', yt: 'https://youtu.be/tv6Wh_uWyIY' },
+            { cat: 'transitions', title: 'Milkshake',             cover: cover('#232122','#7c4dea','T2'), video: 'portfolio_previews/Transitions/milkshake transition_preview.mp4', yt: 'https://youtube.com/shorts/lg7lsIWkpO8?feature=share' },
+            { cat: 'transitions', title: 'Oats',                  cover: cover('#232122','#7c4dea','T3'), video: 'portfolio_previews/Transitions/oats transition_preview.mp4', yt: 'https://youtu.be/iEpfQowojKI' },
             // Tuff Edits
-            { cat: 'brand', title: 'Glasses',                     cover: cover('#cfbcff','#3b2a8f','B1'), video: 'portfolio_previews/Tuff edits/Glasses_preview.mp4' },
-            { cat: 'brand', title: 'JJK Edit',                    cover: cover('#cfbcff','#3b2a8f','B2'), video: 'portfolio_previews/Tuff edits/JJK version  Buy my Quality, link in bioFollow me for more- @lohax_preview.mp4' },
-            { cat: 'brand', title: 'ODETARI Keep Up',             cover: cover('#cfbcff','#3b2a8f','B3'), video: 'portfolio_previews/Tuff edits/ODETARI - KEEP UP (Lyrics)_3_preview.mp4' },
-            { cat: 'brand', title: 'VFX Pringle',                 cover: cover('#cfbcff','#3b2a8f','B4'), video: 'portfolio_previews/Tuff edits/VFXpringle_preview.mp4' },
-            { cat: 'brand', title: 'Raw Footage',                 cover: cover('#cfbcff','#3b2a8f','B5'), video: 'portfolio_previews/Tuff edits/VID_20240811_160409496_preview.mp4' },
-            { cat: 'brand', title: 'Sekiro',                      cover: cover('#cfbcff','#3b2a8f','B6'), video: 'portfolio_previews/Tuff edits/sekiro_preview.mp4' },
-            { cat: 'brand', title: 'Spider-Man',                  cover: cover('#cfbcff','#3b2a8f','B7'), video: 'portfolio_previews/Tuff edits/spiderman_preview.mp4' },
-            { cat: 'brand', title: 'TV Off / Back',               cover: cover('#cfbcff','#3b2a8f','B8'), video: 'portfolio_previews/Tuff edits/tvOff_Back_preview.mp4' },
+            { cat: 'brand', title: 'Glasses',                     cover: cover('#cfbcff','#3b2a8f','B1'), video: 'portfolio_previews/Tuff edits/Glasses_preview.mp4', yt: 'https://youtube.com/shorts/TWZzo8m1gFY?feature=share' },
+            { cat: 'brand', title: 'JJK Edit',                    cover: cover('#cfbcff','#3b2a8f','B2'), video: 'portfolio_previews/Tuff edits/JJK version  Buy my Quality, link in bioFollow me for more- @lohax_preview.mp4', yt: 'https://youtube.com/shorts/A3CAfbgDxkc?feature=share' },
+            { cat: 'brand', title: 'ODETARI Keep Up',             cover: cover('#cfbcff','#3b2a8f','B3'), video: 'portfolio_previews/Tuff edits/ODETARI - KEEP UP (Lyrics)_3_preview.mp4', yt: 'https://youtube.com/shorts/sR_UjZkaWtc?feature=share' },
+            { cat: 'brand', title: 'VFX Pringle',                 cover: cover('#cfbcff','#3b2a8f','B4'), video: 'portfolio_previews/Tuff edits/VFXpringle_preview.mp4', yt: 'https://youtube.com/shorts/EDxeLUs0QbU?feature=share' },
+            { cat: 'brand', title: 'Raw Footage',                 cover: cover('#cfbcff','#3b2a8f','B5'), video: 'portfolio_previews/Tuff edits/VID_20240811_160409496_preview.mp4', yt: 'https://youtube.com/shorts/eMAm0WpJEvY?feature=share' },
+            { cat: 'brand', title: 'Sekiro',                      cover: cover('#cfbcff','#3b2a8f','B6'), video: 'portfolio_previews/Tuff edits/sekiro_preview.mp4', yt: 'https://youtu.be/-RjYrG-DERY' },
+            { cat: 'brand', title: 'Spider-Man',                  cover: cover('#cfbcff','#3b2a8f','B7'), video: 'portfolio_previews/Tuff edits/spiderman_preview.mp4', yt: 'https://youtube.com/shorts/IZeXJpLw9bU?feature=share' },
+            { cat: 'brand', title: 'TV Off / Back',               cover: cover('#cfbcff','#3b2a8f','B8'), video: 'portfolio_previews/Tuff edits/tvOff_Back_preview.mp4', yt: 'https://youtu.be/3wULu0JYipc' },
             // Misc
-            { cat: 'misc', title: 'Color Grade Reel',             cover: cover('#7c4dea','#121110','X1'), video: 'portfolio_previews/Miscellaneous/ColorGradeReel_preview.mp4' },
-            { cat: 'misc', title: 'Eye Macro',                    cover: cover('#7c4dea','#121110','X2'), video: 'portfolio_previews/Miscellaneous/Dark brown eye opening macro   Stock Video Footage - 1M (720p, h264)_preview.mp4' },
-            { cat: 'misc', title: 'Lofi Pre-edit',                cover: cover('#7c4dea','#121110','X3'), video: 'portfolio_previews/Miscellaneous/lofi_pre_edit_preview.mp4' },
-            { cat: 'misc', title: 'Real YT AS3',                  cover: cover('#7c4dea','#121110','X4'), video: 'portfolio_previews/Miscellaneous/real yt as3_preview.mp4' },
+            { cat: 'misc', title: 'Color Grade Reel',             cover: cover('#7c4dea','#121110','X1'), video: 'portfolio_previews/Miscellaneous/ColorGradeReel_preview.mp4', yt: 'https://youtube.com/shorts/c0HmqCdiDTw?feature=share' },
+            { cat: 'misc', title: 'Eye Macro',                    cover: cover('#7c4dea','#121110','X2'), video: 'portfolio_previews/Miscellaneous/Dark brown eye opening macro   Stock Video Footage - 1M (720p, h264)_preview.mp4', yt: 'https://youtu.be/Ae-NAoN4frA' },
+            { cat: 'misc', title: 'Lofi Pre-edit',                cover: cover('#7c4dea','#121110','X3'), video: 'portfolio_previews/Miscellaneous/lofi_pre_edit_preview.mp4', yt: 'https://youtu.be/7XqcGfxS82E' },
+            { cat: 'misc', title: 'Real YT AS3',                  cover: cover('#7c4dea','#121110','X4'), video: 'portfolio_previews/Miscellaneous/real yt as3_preview.mp4', yt: 'https://youtu.be/unZxJBBqF5M' },
         ];
         const UNIQUE_VIDEOS = [...new Set(WORK.map(w => w.video))];
         const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -1207,7 +1389,7 @@ I specialize in video editing and content creation for brands and creators, help
         /* ======================================================
            SPREAD VIEW – flat grid shown when a category filter is active
            ====================================================== */
-        function SpreadView({ items, fadeOut }) {
+        function SpreadView({ items, fadeOut, onOpen, modalOpen }) {
             const wrapRef = useRef();
             const [inView, setInView] = useState(true);
             const [tabVisible, setTabVisible] = useState(!document.hidden);
@@ -1226,7 +1408,7 @@ I specialize in video editing and content creation for brands and creators, help
                 return () => { io.disconnect(); document.removeEventListener('visibilitychange', onVis); };
             }, []);
 
-            const shouldPlay = inView && tabVisible && !fadeOut;
+            const shouldPlay = inView && tabVisible && !fadeOut && !modalOpen;
 
             return h('div', { className: 'spread' + (fadeOut ? ' out' : ''), ref: wrapRef },
                 h('div', {
@@ -1234,13 +1416,13 @@ I specialize in video editing and content creation for brands and creators, help
                     style: { '--sw': '180px', '--sg': '18px' }
                 },
                     items.map((c, i) =>
-                        h(SpreadCard, { key: c.video + i, item: c, shouldPlay })
+                        h(SpreadCard, { key: c.video + i, item: c, shouldPlay, onOpen })
                     )
                 )
             );
         }
 
-        function SpreadCard({ item, shouldPlay }) {
+        function SpreadCard({ item, shouldPlay, onOpen }) {
             const vidRef = useRef();
 
             // Central play/pause control driven by parent visibility state
@@ -1265,10 +1447,103 @@ I specialize in video editing and content creation for brands and creators, help
                 return () => { v.removeEventListener('playing', show); v.removeEventListener('pause', hide); };
             }, []);
 
-            return h('div', { className: 'spread-card' },
+            return h('div', {
+                className: 'spread-card',
+                onClick: () => onOpen && onOpen(item),
+                role: 'button',
+                tabIndex: 0,
+                'aria-label': item.title + ' – watch YouTube preview',
+                onKeyDown: e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onOpen && onOpen(item);
+                    }
+                }
+            },
                 h('img', { src: item.cover, alt: '', draggable: false }),
                 h('video', { ref: vidRef, src: item.video, loop: true, muted: true, playsInline: true, preload: 'auto', tabIndex: -1, 'aria-hidden': true }),
                 h('div', { className: 'cap' }, item.title)
+            );
+        }
+
+        /* ======================================================
+           YOUTUBE PREVIEW MODAL
+           ====================================================== */
+        function parseYt(url) {
+            if (!url) return null;
+            let id = '';
+            const isShort = url.includes('/shorts/');
+            if (isShort) {
+                id = url.split('/shorts/')[1].split(/[?#&]/)[0];
+            } else if (url.includes('youtu.be/')) {
+                id = url.split('youtu.be/')[1].split(/[?#&]/)[0];
+            } else if (url.includes('watch?v=')) {
+                id = url.split('watch?v=')[1].split(/[&#]/)[0];
+            }
+            return { id, isShort, url };
+        }
+
+        function VideoModal({ item, onClose }) {
+            if (!item) return null;
+            const info = parseYt(item.yt);
+            if (!info || !info.id) return null;
+
+            useEffect(() => {
+                const onKey = e => {
+                    if (e.key === 'Escape') onClose();
+                };
+                window.addEventListener('keydown', onKey);
+                const prev = document.body.style.overflow;
+                document.body.style.overflow = 'hidden';
+                return () => {
+                    window.removeEventListener('keydown', onKey);
+                    document.body.style.overflow = prev;
+                };
+            }, [onClose]);
+
+            const catObj = CATEGORIES.find(c => c.id === item.cat);
+            const catLabel = catObj ? catObj.label : item.cat;
+            // sound turned on by default (mute=0), autoplay=1, looping
+            const embedUrl = `https://www.youtube.com/embed/${info.id}?autoplay=1&mute=0&loop=1&playlist=${info.id}&rel=0&playsinline=1&enablejsapi=1`;
+
+            return ReactDOM.createPortal(
+                h('div', {
+                    className: 'yt-modal-backdrop',
+                    onClick: e => {
+                        if (e.target === e.currentTarget) onClose();
+                    }
+                },
+                    h('div', {
+                        className: 'yt-modal-dialog' + (info.isShort ? ' is-short' : ' is-wide'),
+                        onClick: e => e.stopPropagation()
+                    },
+                        h('div', { className: 'yt-dialog-header' },
+                            h('div', { className: 'yt-dialog-info' },
+                                h('span', { className: 'yt-dialog-tag' }, catLabel),
+                                h('span', { className: 'yt-dialog-title' }, item.title)
+                            ),
+                            h('button', {
+                                className: 'yt-dialog-close',
+                                onClick: onClose,
+                                'aria-label': 'Close preview',
+                                title: 'Close (Esc)'
+                            }, '✕')
+                        ),
+                        h('div', {
+                            className: 'yt-video-wrap' + (info.isShort ? ' is-short' : ' is-wide')
+                        },
+                            h('iframe', {
+                                src: embedUrl,
+                                title: item.title,
+                                className: 'yt-iframe',
+                                allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+                                allowFullScreen: true
+                            })
+                        ),
+                        h('div', { className: 'yt-dismiss-hint' }, 'Click anywhere outside to close · Esc')
+                    )
+                ),
+                document.body
             );
         }
 
@@ -1280,6 +1555,9 @@ I specialize in video editing and content creation for brands and creators, help
             const [ui, setUi] = useState({ on: false, delay: 1, instant: false });
             const [started, setStarted] = useState(false), [done, setDone] = useState(false);
             const [sel, setSel] = useState(null), [applied, setApplied] = useState(null);   // sel = button state, applied = what the wheel shows
+            const [previewVideo, setPreviewVideo] = useState(null);
+            const modalOpenRef = useRef(false);
+            modalOpenRef.current = !!previewVideo;
             const reduce = useRef(typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches).current;
 
             /* one rAF loop: poses, frame, world, counter, video */
@@ -1323,8 +1601,8 @@ I specialize in video editing and content creation for brands and creators, help
                         const P = pose(i, d, l, rot, S.k), el = cards[i];
                         put(el, 'visibility', P.visible ? 'visible' : 'hidden');
                         if (P.visible) put(el, 'transform', P.transform);
-                        /* 4. VIDEO: after lift > .6, only cards within 40deg of the top play */
-                        const want = !reduce && l > 0.6 && P.visible && Math.abs(P.a) <= 40;
+                        /* 4. VIDEO: after lift > .6, only cards within 40deg of the top play (paused when modal open) */
+                        const want = !modalOpenRef.current && !reduce && l > 0.6 && P.visible && Math.abs(P.a) <= 40;
                         if (want !== playing[i]) {
                             playing[i] = want;
                             const v = vids[i];
@@ -1435,6 +1713,28 @@ I specialize in video editing and content creation for brands and creators, help
             const selLabel = sel ? CATEGORIES.find(c => c.id === sel).label : 'All work';
             const [spreadOut, setSpreadOut] = useState(false);
             const timerRef = useRef(null);
+            /* sel pill: measure element to compute center x-offset */
+            const selRef = useRef();
+            const [selX, setSelX] = useState(0);
+            useEffect(() => {
+                const compute = () => {
+                    const el = selRef.current;
+                    if (!el || !ui.on) return;
+                    // When no filter: center pill. When filter active: snap back to left (x=0)
+                    setSelX(sel ? 0 : Math.round(window.innerWidth / 2 - el.offsetWidth / 2 - 22));
+                };
+                // tiny delay lets React paint the new label before we measure
+                const t = setTimeout(compute, 0);
+                window.addEventListener('resize', compute);
+                return () => { clearTimeout(t); window.removeEventListener('resize', compute); };
+            }, [sel, ui.on]);
+
+            const openPreview = w => {
+                S.vel = 0;
+                resetRef.current();
+                setPreviewVideo(w);
+            };
+
             const pick = id => {
                 if (!doneRef.current) return;
                 const next = sel === id ? null : id;
@@ -1470,25 +1770,45 @@ I specialize in video editing and content creation for brands and creators, help
                 },
                     h('div', { className: 'bound' }, h('div', { className: 'sky', ref: skyRef, style: SKY_IMAGE ? { backgroundImage: `url("${SKY_IMAGE}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined })),
                     h('div', { className: 'scene', ref: sceneRef, style: { opacity: applied ? 0 : 1, pointerEvents: applied ? 'none' : 'auto' } },
-                        allSlots.map((c, i) => h('a', { key: i, className: 'card', href: '#work-' + (i + 1), draggable: false, 'aria-label': c.title + ' – watch project' },
+                        allSlots.map((c, i) => h('a', {
+                            key: i, className: 'card', href: '#work-' + (i + 1), draggable: false, 'aria-label': c.title + ' – watch on YouTube',
+                            onClick: e => {
+                                e.preventDefault();
+                                if (!S.dragged) openPreview(c);
+                            }
+                        },
                             h('div', { className: 'face front' },
                                 h('img', { className: 'cover', src: c.cover, alt: '', draggable: false }),
                                 h('video', { src: c.video, loop: true, muted: true, playsInline: true, preload: 'none', tabIndex: -1, 'aria-hidden': true }),
                                 h('div', { className: 'cap' }, c.title)),
                             h('div', { className: 'face back', 'aria-hidden': true }, MONO)))),
                     /* Flat spread overlay */
-                    (applied || spreadOut) && h(SpreadView, { items: spreadItems, fadeOut: spreadOut }),
-                    h(motion.div, { className: 'sel', ...fade(12) },
+                    (applied || spreadOut) && h(SpreadView, { items: spreadItems, fadeOut: spreadOut, onOpen: openPreview, modalOpen: !!previewVideo }),
+                    h(motion.div, {
+                        className: 'sel', ref: selRef,
+                        initial: false,
+                        animate: {
+                            opacity: ui.on ? 1 : 0,
+                            y: ui.on ? 0 : 12,
+                            x: ui.on ? selX : 0
+                        },
+                        transition: {
+                            x: { duration: 0.55, ease: [0.4, 0, 0.2, 1] },
+                            opacity: { duration: ui.instant ? 0 : 0.9, delay: ui.on ? ui.delay : 0, ease: 'easeOut' },
+                            y:       { duration: ui.instant ? 0 : 0.9, delay: ui.on ? ui.delay : 0, ease: 'easeOut' }
+                        }
+                    },
                         h('div', null,
-                            h('small', null, sel ? 'Now showing · tap again to clear' : 'Now showing'),
-                            h(motion.b, { key: sel || 'all', initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5 } }, selLabel)),
+                            h('small', null, sel ? 'tap again to clear' : 'Now showing'),
+                            h(motion.b, { key: sel || 'all', initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.4, ease: 'easeOut' } }, selLabel)),
                         h('em', null, selCount + (selCount === 1 ? ' video' : ' videos')))),
                 h(motion.div, { className: 'copy', ...fade(20) },
                     h('h1', null, 'I cut films for ', U('#7c4dea', 'brands', '01'), ', reels for ', U('#232122', 'creators', '02'), ' and trailers for ', U('#b79cf5', 'stories', '03'), '.'),
                     h('div', { className: 'stats' }, STATS.map(([v, l]) => h('div', { key: l }, h('b', null, v), h('span', null, l))))),
                 !done && h('div', { className: 'counter', style: { opacity: ui.on ? 0 : 1 } },
                     h('small', null, 'LOADING REELS'), h('b', { ref: numRef }, '000'), h('em', null, '%')),
-                started && !done && h('button', { className: 'skip', 'aria-label': 'Skip intro', title: 'Skip intro', onClick: () => skipRef.current() }, '↗'));
+                started && !done && h('button', { className: 'skip', 'aria-label': 'Skip intro', title: 'Skip intro', onClick: () => skipRef.current() }, '↗'),
+                previewVideo && h(VideoModal, { item: previewVideo, onClose: () => setPreviewVideo(null) }));
         }
 
         function Site() { return h(React.Fragment, null, h(Intro), h(About), h(ReelHero)); }
