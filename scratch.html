@@ -359,14 +359,97 @@
         }
 
         .top .sp {
-            width: 150px
+            width: 215px
         }
 
         .top nav {
             display: flex;
-            gap: 22px;
+            gap: 8px;
             margin-right: auto;
-            opacity: 0
+            opacity: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 4px
+        }
+
+        .top nav::-webkit-scrollbar {
+            display: none
+        }
+
+        .f {
+            font: 300 12px var(--wide);
+            padding: .75em 1.3em;
+            border-radius: 99px;
+            border: 1px solid #d6d1e6;
+            background: transparent;
+            color: var(--ink);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .25s, color .25s, border-color .25s
+        }
+
+        .f:hover:not(:disabled) {
+            border-color: var(--violet);
+            color: var(--violet)
+        }
+
+        .f.on {
+            background: var(--dark);
+            border-color: var(--dark);
+            color: #fff
+        }
+
+        .f.on:hover:not(:disabled) {
+            color: #fff
+        }
+
+        .f:disabled {
+            cursor: default
+        }
+
+        .f:focus-visible {
+            outline: 2px solid var(--violet);
+            outline-offset: 2px
+        }
+
+        .sel {
+            position: absolute;
+            left: 22px;
+            bottom: 20px;
+            z-index: 4;
+            display: flex;
+            align-items: flex-end;
+            gap: 26px;
+            padding: 14px 22px 16px;
+            border-radius: 22px;
+            background: rgba(250, 249, 246, .62);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            pointer-events: none;
+            max-width: calc(100% - 44px)
+        }
+
+        .sel small {
+            display: block;
+            font: 300 10px var(--wide);
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            opacity: .6;
+            margin-bottom: 6px
+        }
+
+        .sel b {
+            display: block;
+            font: 300 clamp(24px, 3.6vw, 54px)/1 var(--wide);
+            letter-spacing: -.05em
+        }
+
+        .sel em {
+            font: 300 12px var(--wide);
+            font-style: normal;
+            color: var(--violet);
+            white-space: nowrap;
+            padding-bottom: 4px
         }
 
         .top a {
@@ -671,12 +754,16 @@
             }
 
             .top .sp {
-                width: 96px
+                width: 135px
             }
 
             .top nav {
-                gap: 14px;
-                font-size: 16px
+                gap: 6px
+            }
+
+            .f {
+                font-size: 11px;
+                padding: .7em 1.05em
             }
 
             .top .cta {
@@ -718,7 +805,8 @@
         /* ================= CONFIG: everything you'll want to edit ================= */
         const NAME = 'Madhav', ROLE = 'video editor';
         const BRAND = NAME.split(' ')[0] + '.', MONO = NAME[0];          // reel wordmark + card-back monogram
-        const PHOTO = '';                                                // url of your photo (leave '' for a placeholder)
+        const SKY_IMAGE = 'aesthetic-cloud-wallpaper.jpg';   // <- YOUR background image for the reels frame, e.g. 'sky.jpg'. '' = purple gradient
+        const PHOTO = '';       // <- ONLY your portrait for the About page. Do not put the sky image here. '' = placeholder
         const ABOUT = `I'm a creative who loves connecting with people and bringing ideas to life through visual storytelling.
 
 I specialize in video editing and content creation for brands and creators, helping them tell their stories in fresh, engaging ways. From the first cut to the final grade, I turn raw footage into scroll-stopping visuals that capture attention and emotion.`;
@@ -735,20 +823,23 @@ I specialize in video editing and content creation for brands and creators, help
             'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
             'https://www.w3schools.com/html/mov_bbb.mp4'
         ];
-        const ITEMS = [
-            ['Brand film', '#8b5cf6', '#1d1a2e'], ['Music video', '#b79cf5', '#2a2160'],
-            ['Short doc', '#232122', '#7c4dea'], ['Reel', '#cfbcff', '#3b2a8f'],
-            ['Commercial', '#7c4dea', '#121110'], ['Travel cut', '#9a73f5', '#232122']
+        const CATEGORIES = [                                             // the filter buttons (id is used by WORK below)
+            { id: 'cinematics', label: 'Cinematics' }, { id: 'motivation', label: 'Motivation' },
+            { id: 'transitions', label: 'Transitions' }, { id: 'brand', label: 'Tuff Brand' }, { id: 'misc', label: 'Misc' }
         ];
+        const PALETTE = [['#8b5cf6', '#1d1a2e'], ['#b79cf5', '#2a2160'], ['#232122', '#7c4dea'], ['#cfbcff', '#3b2a8f'], ['#7c4dea', '#121110']];
         /* ========================================================================== */
 
         const N = 34, STEP = 360 / N;
         const cover = (a, b, n) => 'data:image/svg+xml,' + encodeURIComponent(
             `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 640"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="360" height="640" fill="url(#g)"/><text x="28" y="108" font-family="Georgia,serif" font-size="64" font-style="italic" fill="#fff" fill-opacity=".85">${n}</text></svg>`);
-        const CARDS = Array.from({ length: N }, (_, i) => {
-            const [t, a, b] = ITEMS[i % ITEMS.length], n = String(i + 1).padStart(2, '0');
-            return { title: `${t} ${n}`, cover: cover(a, b, n), video: VIDEOS[i % VIDEOS.length] };
-        });
+        /* WORK: every video on the wheel. Placeholder entries below (3 per category).
+           Replace with your own, e.g. { cat: 'cinematics', title: 'Desert film', cover: 'desert.jpg', video: 'desert.mp4' } */
+        const WORK = [1, 2, 3].flatMap(n => CATEGORIES.map((c, ci) => ({
+            cat: c.id, title: `${c.label} ${String(n).padStart(2, '0')}`,
+            cover: cover(PALETTE[ci][0], PALETTE[ci][1], String(n).padStart(2, '0')), video: VIDEOS[(ci + n) % VIDEOS.length]
+        })));
+        const UNIQUE_VIDEOS = [...new Set(WORK.map(w => w.video))];
         const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
         const wrap = a => ((a + 180) % 360 + 360) % 360 - 180;
         const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
@@ -1017,12 +1108,13 @@ I specialize in video editing and content creation for brands and creators, help
         }
 
         function ReelHero() {
-            const secRef = useRef(), stageRef = useRef(), sceneRef = useRef(), skyRef = useRef(), cloudsRef = useRef(), numRef = useRef();
+            const secRef = useRef(), stageRef = useRef(), sceneRef = useRef(), skyRef = useRef(), numRef = useRef(), resetRef = useRef(() => { }), dealAnimRef = useRef(null);
             const deal = useMotionValue(0), lift = useMotionValue(0);
             const S = useRef({ cur: 0, target: 0, vel: 0, drag: false, dragged: false, k: 1, real: 0, shown: 0 }).current;
             const skipRef = useRef(() => { }), doneRef = useRef(false), liveRef = useRef(false);
             const [ui, setUi] = useState({ on: false, delay: 1, instant: false });
             const [started, setStarted] = useState(false), [done, setDone] = useState(false);
+            const [sel, setSel] = useState(null), [applied, setApplied] = useState(null);   // sel = button state, applied = what the wheel shows
             const reduce = useRef(typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches).current;
 
             /* one rAF loop: poses, frame, world, counter, video */
@@ -1032,6 +1124,7 @@ I specialize in video editing and content creation for brands and creators, help
                 const vids = cards.map(c => c.querySelector('video'));
                 const playing = cards.map(() => false);
                 vids.forEach(v => { v.muted = true; v.addEventListener('playing', () => { v.style.opacity = 1; }); });
+                resetRef.current = () => { vids.forEach(v => { v.pause(); v.style.opacity = 0; }); playing.fill(false); };
                 const ro = new ResizeObserver(() => {
                     const r = stage.getBoundingClientRect();
                     S.k = clamp(r.height / 900, 0.45, 1.2);
@@ -1053,8 +1146,6 @@ I specialize in video editing and content creation for brands and creators, help
                     put(sceneRef.current, 'transform', `rotateX(${(12 * l).toFixed(3)}deg) scale(${(1 + 0.14 * l).toFixed(4)})`);
                     put(stage, 'clipPath', `inset(${(-(1 - l) * 700).toFixed(1)}px round ${(28 * l).toFixed(1)}px)`);
                     put(skyRef.current, 'opacity', l.toFixed(3));
-                    put(cloudsRef.current, 'visibility', l > 0 ? 'visible' : 'hidden');
-                    put(cloudsRef.current, 'transform', `translate3d(0,${((1 - l) * 100).toFixed(2)}%,0)`);
 
                     // counter follows the deal but never runs ahead of the real asset progress
                     const target = Math.min(S.real, Math.round(d * 100));
@@ -1105,12 +1196,13 @@ I specialize in video editing and content creation for brands and creators, help
                 };
 
                 const imgs = [...document.querySelectorAll('.cover')];
-                const total = imgs.length + VIDEOS.length; let n = 0;
+                const total = imgs.length + UNIQUE_VIDEOS.length + (SKY_IMAGE ? 1 : 0); let n = 0;
                 const bump = () => { S.real = Math.round(++n / total * 100); };
                 const covers = Promise.all(imgs.map(im => (im.decode ? im.decode() : Promise.resolve()).catch(() => { }).then(bump)));
-                const previews = Promise.all(VIDEOS.map(src => new Promise(res => {
+                const previews = Promise.all([...UNIQUE_VIDEOS, ...(SKY_IMAGE ? [SKY_IMAGE] : [])].map(src => new Promise(res => {
                     const v = document.createElement('video'); let fin = false;
                     const ok = () => { if (fin) return; fin = true; bump(); res(); };
+                    if (src === SKY_IMAGE) { const im = new Image(); im.onload = im.onerror = ok; setTimeout(ok, 5000); im.src = src; return; }
                     v.preload = 'metadata'; v.muted = true;
                     v.addEventListener('loadedmetadata', ok); v.addEventListener('error', ok);
                     setTimeout(ok, 5000); v.src = src;
@@ -1172,8 +1264,25 @@ I specialize in video editing and content creation for brands and creators, help
                 animate: { opacity: ui.on ? 1 : 0, y: ui.on ? 0 : y },
                 transition: { duration: ui.instant ? 0 : 0.9, delay: ui.delay, ease: 'easeOut' }
             });
-            const blobs = [[-6, 30, 34, 70], [14, 24, 30, 80], [32, 14, 34, 85], [52, 22, 32, 78], [70, 12, 34, 82], [88, 26, 28, 70]];
-            const tones = ['#ffffff', '#faf9f6', '#f1ecfb'];
+            /* FILTERS: click a category to re-deal the wheel with only those videos; click it again to show everything */
+            const list = applied ? WORK.filter(w => w.cat === applied) : WORK;
+            const slots = Array.from({ length: N }, (_, i) => list[i % list.length]);        // fill the full wheel from the list
+            const selCount = (sel ? WORK.filter(w => w.cat === sel) : WORK).length;
+            const selLabel = sel ? CATEGORIES.find(c => c.id === sel).label : 'All work';
+            const pick = id => {
+                if (!doneRef.current) return;
+                const next = sel === id ? null : id;
+                setSel(next);
+                if (reduce) { resetRef.current(); setApplied(next); return; }
+                dealAnimRef.current && dealAnimRef.current.stop();
+                dealAnimRef.current = animate(deal, 0, {
+                    duration: 0.45, ease: [0.5, 0, 0.9, 0.4], onComplete: () => {
+                        ReactDOM.flushSync(() => setApplied(next));                                 // swap the videos while the deck is hidden
+                        resetRef.current();
+                        dealAnimRef.current = animate(deal, 1, { duration: 1.6, ease: 'linear' });  // deal the new hand
+                    }
+                });
+            };
             const U = (c, t, n) => h('span', null, h('u', { style: { textDecorationColor: c } }, t), h('sup', null, n));
 
             return h('section', { className: 'reel', id: 'reel', ref: secRef },
@@ -1183,24 +1292,26 @@ I specialize in video editing and content creation for brands and creators, help
                 }, BRAND),
                 h('header', { className: 'top' },
                     h('span', { className: 'sp' }),
-                    h(motion.nav, fade(-10), h('a', { href: '#top' }, 'Intro'), h('a', { href: '#about' }, 'About'), h('a', { href: '#reel' }, 'Reels')),
+                    h(motion.nav, { 'aria-label': 'Filter videos', ...fade(-10) },
+                        CATEGORIES.map(c => h('button', { key: c.id, className: 'f' + (sel === c.id ? ' on' : ''), 'aria-pressed': sel === c.id, disabled: !done, onClick: () => pick(c.id) }, c.label))),
                     h(motion.a, { className: 'cta', href: '#contact', ...fade(-10) }, "Let's talk")),
                 h('div', {
                     className: 'stage', ref: stageRef,
                     onClickCapture: e => { if (S.dragged) { e.preventDefault(); e.stopPropagation(); S.dragged = false; } }
                 },
-                    h('div', { className: 'bound' }, h('div', { className: 'sky', ref: skyRef })),
+                    h('div', { className: 'bound' }, h('div', { className: 'sky', ref: skyRef, style: SKY_IMAGE ? { backgroundImage: `url("${SKY_IMAGE}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined })),
                     h('div', { className: 'scene', ref: sceneRef },
-                        CARDS.map((c, i) => h('a', { key: i, className: 'card', href: '#work-' + (i + 1), draggable: false, 'aria-label': c.title + ' – watch project' },
+                        slots.map((c, i) => h('a', { key: i, className: 'card', href: '#work-' + (i + 1), draggable: false, 'aria-label': c.title + ' – watch project' },
                             h('div', { className: 'face front' },
                                 h('img', { className: 'cover', src: c.cover, alt: '', draggable: false }),
                                 h('video', { src: c.video, loop: true, muted: true, playsInline: true, preload: 'none', tabIndex: -1, 'aria-hidden': true }),
                                 h('div', { className: 'cap' }, c.title)),
                             h('div', { className: 'face back', 'aria-hidden': true }, MONO)))),
-                    h('div', { className: 'bound cl' },
-                        h('div', { className: 'clouds', ref: cloudsRef },
-                            h('i', { className: 'base' }),
-                            blobs.map((b, i) => h('i', { key: i, style: { left: b[0] + '%', bottom: b[1] + '%', width: b[2] + '%', height: b[3] + '%', background: tones[i % 3] } }))))),
+                    h(motion.div, { className: 'sel', ...fade(12) },
+                        h('div', null,
+                            h('small', null, sel ? 'Now showing · tap again to clear' : 'Now showing'),
+                            h(motion.b, { key: sel || 'all', initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5 } }, selLabel)),
+                        h('em', null, selCount + (selCount === 1 ? ' video' : ' videos')))),
                 h(motion.div, { className: 'copy', ...fade(20) },
                     h('h1', null, 'I cut films for ', U('#7c4dea', 'brands', '01'), ', reels for ', U('#232122', 'creators', '02'), ' and trailers for ', U('#b79cf5', 'stories', '03'), '.'),
                     h('div', { className: 'stats' }, STATS.map(([v, l]) => h('div', { key: l }, h('b', null, v), h('span', null, l))))),
