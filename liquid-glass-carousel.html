@@ -11,9 +11,7 @@
   :root {
     --page-bg: #faf8f5;
     --wide: 'Unbounded', 'Syne', system-ui, sans-serif;
-    /* Placeholder sky. Swap for your clouds later, e.g.:
-       --hero-bg: url("clouds.jpg") center / cover no-repeat; */
-    --hero-bg: linear-gradient(180deg, #9fe6f0 0%, #b9d8f5 45%, #f1c9e6 100%);
+    --hero-bg: url("dreamy-cloudscape-pastel-colors.jpg") center / cover no-repeat;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -77,11 +75,11 @@ const ITEMS = [
 const OPTIONS = { panelHeight: 450, gap: 12, background: "#ffffff", entry: true };
 
 const LENS = {
-  sizeX: 0.565, sizeY: 1, posX: 0.5, posY: 0.5, rotation: 65, spin: 0, zoom: 0,
-  dispersion: 11, blur: 0, glow: 4.2, whiteGlow: 0.24, novaSize: 12, blueRing: 6,
+  sizeX: 0.9, sizeY: 1.15, posX: 0.5, posY: 0.5, rotation: 25, spin: 0, zoom: 0,
+  dispersion: 18, blur: 2, glow: 8, whiteGlow: 0.3, novaSize: 14, blueRing: 3,
   ringRadius: 0.49, ringWidth: 0.014, shimmer: true, shimmerFreq: 12, shimmerSpeed: 3.5,
-  shimmerDepth: 0.12, rimStart: 0.578, rimTangential: 0.6, rimInward: 0, rimFreq1: 2,
-  rimFreq2: 1, blueColor: "#009dff", rimLine: 1.4, rimLinePos: 0.488, rimLineWidth: 0.003,
+  shimmerDepth: 0.18, rimStart: 0.52, rimTangential: 1.1, rimInward: 0, rimFreq1: 2,
+  rimFreq2: 1, blueColor: "#4bbcff", rimLine: 0.7, rimLinePos: 0.488, rimLineWidth: 0.003,
   vignette: 0, vignetteSize: 0.3, samples: 16,
 };
 const FOCUS = { cardDuration: 0.7, focusDuration: 0.9, cardEase: "power4.out", focusEase: "power3.out", stagger: 0.06, dropDist: 1.4, centerScale: 1.18, lensFade: 0.85 };
@@ -408,6 +406,7 @@ function createCarousel(mount, cursorElement, options) {
   };
   const lensMat = new THREE.ShaderMaterial({ uniforms: lensUniforms, vertexShader: LENS_VERTEX, fragmentShader: LENS_FRAGMENT });
   const lensQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), lensMat);
+  lensQuad.visible = false;
   lensScene.add(lensQuad);
 
   const total = REPEATS * sources.length;
@@ -796,7 +795,8 @@ function createCarousel(mount, cursorElement, options) {
     renderer.setRenderTarget(rt);
     renderer.render(scene, camera);
     renderer.setRenderTarget(null);
-    renderer.render(lensScene, lensCam);
+    if (lensQuad.visible) renderer.render(lensScene, lensCam);
+    else renderer.render(scene, camera);
     raf = requestAnimationFrame(tick);
   }
   function startLoop() { if (!running || raf) return; raf = requestAnimationFrame(tick); }
