@@ -6,35 +6,43 @@
 <title>Liquid Glass Carousel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500&family=Instrument+Serif&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --page-bg: #faf8f5;
+    --ink: #121110;
+    --paper: #f2f1ef;
+    --cream: #faf9f6;
+    --dark: #232122;
+    --violet: #7c4dea;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
     --wide: 'Unbounded', 'Syne', system-ui, sans-serif;
+    --page-bg: var(--cream);
     --hero-bg: url("dreamy-cloudscape-pastel-colors.jpg") center / cover no-repeat;
   }
   * { box-sizing: border-box; }
   html, body {
     margin: 0;
     background: var(--page-bg);
-    color: #111;
+    color: var(--ink);
     font-family: var(--wide);
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
   html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
-  .headline { margin: 28px 46px 80px; font: 300 clamp(40px, 6vw, 88px)/1 var(--wide); letter-spacing: -0.04em; }
+  .headline { margin: 28px 46px 80px; color: var(--ink); font: 300 clamp(22px, 3.1vw, 46px)/1.08 var(--wide); letter-spacing: -0.04em; }
   /* The hero card that holds the effect. The canvas is transparent, so this background shows through. */
-  #carousel { position: relative; margin: 25px 25px 0; height: clamp(480px, 72vh, 700px); border-radius: 32px; overflow: hidden; isolation: isolate; background: var(--hero-bg); color: #111; outline: none; }
-  #carousel:focus-visible { box-shadow: inset 0 0 0 2px rgba(0,0,0,.2); }
+  #carousel { position: relative; margin: 25px 25px 0; height: clamp(480px, 72vh, 700px); border-radius: 28px; overflow: hidden; isolation: isolate; background: var(--hero-bg); color: var(--ink); outline: none; }
+  #carousel:focus-visible { box-shadow: inset 0 0 0 2px var(--violet); }
   #mount { position: absolute; inset: 0; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
-  .label { position: absolute; left: 50%; margin: 0; z-index: 10; text-align: center; font-weight: 500; letter-spacing: -0.02em; color: #000; opacity: 0; pointer-events: none; }
-  #title { top: 4.5%; font-size: 17px; }
-  #counter { bottom: 6%; font-size: 15px; font-variant-numeric: tabular-nums; }
-  #cursor { position: absolute; left: 0; top: 0; z-index: 20; font-size: 13px; font-weight: 500; color: #000; mix-blend-mode: exclusion; pointer-events: none; }
-  #close { position: absolute; right: 4%; top: 4.5%; z-index: 20; font: 500 13px inherit; font-family: inherit; color: #000; mix-blend-mode: exclusion; background: none; border: 0; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s; }
-  #fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: #666; font-size: 14px; text-align: center; padding: 24px; }
+  .label { position: absolute; left: 50%; margin: 0; z-index: 10; text-align: center; font: 300 13px var(--wide); letter-spacing: -0.02em; color: var(--ink); opacity: 0; pointer-events: none; }
+  #title { top: 4.5%; }
+  #counter { bottom: 6%; color: var(--ink); font: 300 13px var(--wide); font-variant-numeric: tabular-nums; }
+  #cursor { display: none; }
+  #close { position: absolute; right: 4%; top: 4.5%; z-index: 20; font: 300 12px var(--wide); color: var(--ink); background: rgba(250, 249, 246, .72); border: 1px solid rgba(18, 17, 16, .18); border-radius: 99px; padding: .75em 1.3em; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s, background .25s, color .25s; }
+  #close:hover { background: var(--dark); color: #fff; }
+  #fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: var(--ink); font: 300 12px var(--wide); text-align: center; padding: 24px; }
   @media (max-width: 639px) { #title { font-size: 15px; } #counter { font-size: 13px; } }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -72,14 +80,15 @@ const ITEMS = [
   { title: "Project Seven", src: photo("1527630941-4a229fd674ab"), aspect: PORTRAIT_ASPECT },
   { title: "Project Eight", src: photo("1603786420263-ad59136a7409"), aspect: PORTRAIT_ASPECT },
 ];
-const OPTIONS = { panelHeight: 450, gap: 12, background: "#ffffff", entry: true };
+const OPTIONS = { panelHeight: 450, gap: 12, background: "#f2f1ef", entry: true };
 
 const LENS = {
-  sizeX: 0.9, sizeY: 1.15, posX: 0.5, posY: 0.5, rotation: 25, spin: 0, zoom: 0,
-  dispersion: 18, blur: 2, glow: 8, whiteGlow: 0.3, novaSize: 14, blueRing: 3,
+  edgeFill: 2.6, posX: 0.5, posY: 0.5, rotation: 45, spin: 0, zoom: 0,
+  shape: 1, squareRound: 0.78,
+  dispersion: 12, blur: 0, glow: 4.2, whiteGlow: 0.24, novaSize: 12, blueRing: 2,
   ringRadius: 0.49, ringWidth: 0.014, shimmer: true, shimmerFreq: 12, shimmerSpeed: 3.5,
-  shimmerDepth: 0.18, rimStart: 0.52, rimTangential: 1.1, rimInward: 0, rimFreq1: 2,
-  rimFreq2: 1, blueColor: "#4bbcff", rimLine: 0.7, rimLinePos: 0.488, rimLineWidth: 0.003,
+  shimmerDepth: 0.12, rimStart: 0.56, rimTangential: 0.85, rimInward: 0, rimFreq1: 2,
+  rimFreq2: 1, blueColor: "#b79cf5", rimLine: 0.7, rimLinePos: 0.488, rimLineWidth: 0.003,
   vignette: 0, vignetteSize: 0.3, samples: 16,
 };
 const FOCUS = { cardDuration: 0.7, focusDuration: 0.9, cardEase: "power4.out", focusEase: "power3.out", stagger: 0.06, dropDist: 1.4, centerScale: 1.18, lensFade: 0.85 };
@@ -387,8 +396,8 @@ function createCarousel(mount, cursorElement, options) {
     uTex: { value: rt.texture },
     uRes: { value: new THREE.Vector2(W * dpr, H * dpr) },
     uCenter: { value: new THREE.Vector2(0.5, 0.5) },
-    uSizeX: { value: LENS.sizeX }, uSizeY: { value: LENS.sizeY },
-    uShape: { value: 0 }, uSquareRound: { value: 0 }, uRotation: { value: 0 },
+    uSizeX: { value: 0.5 }, uSizeY: { value: 0.5 },
+    uShape: { value: LENS.shape }, uSquareRound: { value: LENS.squareRound }, uRotation: { value: 0 },
     uAspect: { value: W / H }, uZoom: { value: LENS.zoom },
     uDispersion: { value: LENS.dispersion }, uBlur: { value: LENS.blur },
     uGlow: { value: LENS.glow }, uWhiteGlow: { value: LENS.whiteGlow },
@@ -404,9 +413,15 @@ function createCarousel(mount, cursorElement, options) {
     uRimLineWidth: { value: LENS.rimLineWidth }, uVignette: { value: LENS.vignette },
     uVignetteSize: { value: LENS.vignetteSize }, uSamples: { value: LENS.samples },
   };
+  const syncLensToBounds = () => {
+    const halfHeight = 0.5 * LENS.edgeFill;
+    lensUniforms.uSizeY.value = halfHeight;
+    lensUniforms.uSizeX.value = halfHeight * (W / H);
+  };
+  syncLensToBounds();
   const lensMat = new THREE.ShaderMaterial({ uniforms: lensUniforms, vertexShader: LENS_VERTEX, fragmentShader: LENS_FRAGMENT });
   const lensQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), lensMat);
-  lensQuad.visible = false;
+  lensQuad.visible = true;
   lensScene.add(lensQuad);
 
   const total = REPEATS * sources.length;
@@ -799,8 +814,7 @@ function createCarousel(mount, cursorElement, options) {
     renderer.setRenderTarget(rt);
     renderer.render(scene, camera);
     renderer.setRenderTarget(null);
-    if (lensQuad.visible) renderer.render(lensScene, lensCam);
-    else renderer.render(scene, camera);
+    renderer.render(lensScene, lensCam);
     raf = requestAnimationFrame(tick);
   }
   function startLoop() { if (!running || raf) return; raf = requestAnimationFrame(tick); }
@@ -820,6 +834,7 @@ function createCarousel(mount, cursorElement, options) {
     renderer.setPixelRatio(ratio);
     rt.setSize(W * ratio, H * ratio);
     lensUniforms.uRes.value.set(W * ratio, H * ratio);
+    syncLensToBounds();
     if (!userInteracted) { scroll = centerForIndex(0); target = scroll; }
   }
   const resizeObserver = new ResizeObserver(onResize);

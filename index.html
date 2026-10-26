@@ -378,29 +378,36 @@
 
         .f {
             font: 300 12px var(--wide);
-            padding: .75em 1.3em;
+            padding: .8em 1.35em;
             border-radius: 99px;
-            border: 1px solid #d6d1e6;
-            background: transparent;
+            border: 1px solid rgba(124, 77, 234, .2);
+            background: rgba(250, 249, 246, .78);
             color: var(--ink);
             cursor: pointer;
             white-space: nowrap;
-            transition: background .25s, color .25s, border-color .25s
+            box-shadow: 0 4px 14px rgba(35, 33, 34, .05);
+            transition: transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease
         }
 
         .f:hover:not(:disabled) {
             border-color: var(--violet);
-            color: var(--violet)
+            color: var(--violet);
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(124, 77, 234, .14);
+            transform: translateY(-2px)
         }
 
         .f.on {
             background: var(--dark);
             border-color: var(--dark);
-            color: #fff
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(35, 33, 34, .18)
         }
 
         .f.on:hover:not(:disabled) {
-            color: #fff
+            color: #fff;
+            background: var(--violet);
+            border-color: var(--violet)
         }
 
         .f:disabled {
@@ -408,8 +415,8 @@
         }
 
         .f:focus-visible {
-            outline: 2px solid var(--violet);
-            outline-offset: 2px
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(124, 77, 234, .22), 0 8px 20px rgba(124, 77, 234, .14)
         }
 
         .sel {
@@ -502,7 +509,7 @@
             position: absolute;
             inset: 0;
             opacity: 0;
-            background: radial-gradient(80% 55% at 78% 8%, #c9b3ff 0%, transparent 62%), radial-gradient(60% 45% at 12% 18%, #9a73f5 0%, transparent 60%), linear-gradient(#2a2160 0%, #5a37c4 40%, #8b5cf6 70%, #cfbcff 100%)
+            background: radial-gradient(80% 55% at 78% 8%, #cfbcff 0%, transparent 62%), radial-gradient(60% 45% at 12% 18%, #b79cf5 0%, transparent 60%), linear-gradient(#232122 0%, #3b2a8f 40%, #7c4dea 70%, #f2f1ef 100%)
         }
 
         .bound.cl {
@@ -552,8 +559,8 @@
         }
 
         .card:hover .face {
-            box-shadow: 0 20px 45px rgba(0, 0, 0, .45), 0 0 24px rgba(139, 92, 246, 0.55);
-            outline: 2px solid rgba(139, 92, 246, 0.75);
+            box-shadow: 0 20px 45px rgba(18, 17, 16, .3), 0 0 24px rgba(124, 77, 234, .42);
+            outline: 2px solid rgba(124, 77, 234, .7);
             outline-offset: -2px
         }
 
@@ -586,7 +593,7 @@
 
         .back {
             transform: rotateY(180deg);
-            background: radial-gradient(circle at 30% 20%, #3a3638, var(--dark));
+            background: radial-gradient(circle at 30% 20%, #4a4547, var(--dark));
             display: grid;
             place-items: center;
             border: 1px solid #3d393b;
