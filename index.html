@@ -910,6 +910,20 @@
             }
         }
 
+        /* ===== PAGE 4: liquid glass carousel ===== */
+        .p4 {
+            min-height: 100svh;
+            padding: 0;
+            background: #faf8f5;
+        }
+
+        .p4 iframe {
+            display: block;
+            width: 100%;
+            height: clamp(760px, 110svh, 1100px);
+            border: 0;
+        }
+
         /* ===== YOUTUBE PREVIEW MODAL ===== */
         .yt-modal-backdrop {
             position: fixed;
@@ -1929,7 +1943,16 @@ I specialize in video editing and content creation for brands and creators, help
                 previewVideo && h(VideoModal, { item: previewVideo, onClose: () => setPreviewVideo(null) }));
         }
 
-        function Site() { return h(React.Fragment, null, h(Intro), h(About), h(ReelHero)); }
+        function LiquidGlass() {
+            return h('section', { className: 'p4', id: 'liquid-glass' },
+                h('iframe', {
+                    src: 'liquid-glass-carousel.html',
+                    title: 'Liquid glass project carousel',
+                    loading: 'lazy'
+                }));
+        }
+
+        function Site() { return h(React.Fragment, null, h(Intro), h(About), h(ReelHero), h(LiquidGlass)); }
         ReactDOM.createRoot(document.getElementById('root')).render(h(Site));
     </script>
 </body>
