@@ -570,8 +570,15 @@ function createCarousel(mount, cursorElement, options) {
   const inputLocked = () => focusState.active || entryActive || entrySettled;
 
   function onWheel(e) {
-    e.preventDefault();
+    const p = localPoint(e);
+    const hit = panelAtPointer(p.x, p.y);
+    if (!hit) {
+      e.preventDefault();
+      window.parent.postMessage({ type: "liquid-carousel-page-wheel", deltaY: e.deltaY || e.deltaX || 0 }, "*");
+      return;
+    }
     if (inputLocked()) return;
+    e.preventDefault();
     userInteracted = true; pendingFocus = null;
     target += (e.deltaY || e.deltaX) * WHEEL;
     lastInput = performance.now(); snapped = false;

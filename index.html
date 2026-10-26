@@ -919,9 +919,18 @@
 
         /* ===== PAGE 4: liquid glass carousel ===== */
         .p4 {
-            min-height: 100svh;
+            min-height: 0;
             padding: 0;
             background: #faf8f5;
+        }
+
+        .graphic-page {
+            display: block;
+            padding: 7vh 36px 2vh;
+            background: var(--cream);
+            color: var(--ink);
+            font: 300 clamp(44px, 5vw, 76px)/1 var(--wide);
+            letter-spacing: -.05em;
         }
 
         .p4 iframe {
@@ -1210,7 +1219,7 @@
 
         /* ================= CONFIG: everything you'll want to edit ================= */
         const NAME = 'Madhav', ROLE = 'video editor';
-        const BRAND = NAME.split(' ')[0] + '.', MONO = NAME[0];          // reel wordmark + card-back monogram
+        const BRAND = 'video editing', MONO = NAME[0];                   // reel wordmark + card-back monogram
         const SKY_IMAGE = 'aesthetic-cloud-wallpaper.jpg';   // <- YOUR background image for the reels frame, e.g. 'sky.jpg'. '' = purple gradient
         const PHOTO = '';       // <- ONLY your portrait for the About page. Do not put the sky image here. '' = placeholder
         const ABOUT = `I'm a creative who loves connecting with people and bringing ideas to life through visual storytelling.
@@ -1901,8 +1910,7 @@ I specialize in video editing and content creation for brands and creators, help
                 h('header', { className: 'top' },
                     h('span', { className: 'sp' }),
                     h(motion.nav, { 'aria-label': 'Filter videos', ...fade(-10) },
-                        CATEGORIES.map(c => h('button', { key: c.id, className: 'f' + (sel === c.id ? ' on' : ''), 'aria-pressed': sel === c.id, disabled: !done, onClick: () => pick(c.id) }, c.label))),
-                    h(motion.a, { className: 'cta', href: '#contact', ...fade(-10) }, "Let's talk")),
+                        CATEGORIES.map(c => h('button', { key: c.id, className: 'f' + (sel === c.id ? ' on' : ''), 'aria-pressed': sel === c.id, disabled: !done, onClick: () => pick(c.id) }, c.label)))),
                 h('div', {
                     className: 'stage', ref: stageRef,
                     onClickCapture: e => { if (S.dragged) { e.preventDefault(); e.stopPropagation(); S.dragged = false; } }
@@ -1941,9 +1949,6 @@ I specialize in video editing and content creation for brands and creators, help
                             h('small', null, sel ? 'tap again to clear' : 'Now showing'),
                             h(motion.b, { key: sel || 'all', initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.4, ease: 'easeOut' } }, selLabel)),
                         h('em', null, selCount + (selCount === 1 ? ' video' : ' videos')))),
-                h(motion.div, { className: 'copy', ...fade(20) },
-                    h('h1', null, 'I cut films for ', U('#7c4dea', 'brands', '01'), ', reels for ', U('#232122', 'creators', '02'), ' and trailers for ', U('#b79cf5', 'stories', '03'), '.'),
-                    h('div', { className: 'stats' }, STATS.map(([v, l]) => h('div', { key: l }, h('b', null, v), h('span', null, l))))),
                 !done && h('div', { className: 'counter', style: { opacity: ui.on ? 0 : 1 } },
                     h('small', null, 'LOADING REELS'), h('b', { ref: numRef }, '000'), h('em', null, '%')),
                 started && !done && h('button', { className: 'skip', 'aria-label': 'Skip intro', title: 'Skip intro', onClick: () => skipRef.current() }, '↗'),
@@ -1952,6 +1957,7 @@ I specialize in video editing and content creation for brands and creators, help
 
         function LiquidGlass() {
             return h('section', { className: 'p4', id: 'liquid-glass' },
+                h('h2', { className: 'graphic-page' }, 'graphic designing'),
                 h('iframe', {
                     src: 'liquid-glass-carousel.html',
                     title: 'Liquid glass project carousel',
@@ -1959,7 +1965,20 @@ I specialize in video editing and content creation for brands and creators, help
                 }));
         }
 
-        function Site() { return h(React.Fragment, null, h(Intro), h(About), h(ReelHero), h(LiquidGlass)); }
+        window.addEventListener('message', e => {
+            if (e.data && e.data.type === 'liquid-carousel-page-wheel') {
+                window.scrollBy({ top: e.data.deltaY, behavior: 'auto' });
+            }
+        });
+
+        function Site() {
+            return h(React.Fragment, null,
+                h(Intro),
+                h(About),
+                h(ReelHero),
+                h(LiquidGlass)
+            );
+        }
         ReactDOM.createRoot(document.getElementById('root')).render(h(Site));
     </script>
 </body>
