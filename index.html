@@ -794,6 +794,11 @@
             transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, outline 0.25s ease
         }
 
+        .spread.tuff .spread-card {
+            width: var(--sw, 150px);
+            height: calc(var(--sw, 150px) * 16 / 9)
+        }
+
         .spread-card:hover {
             transform: translateY(-8px) scale(1.025);
             box-shadow: 0 22px 48px rgba(0, 0, 0, .45), 0 0 26px rgba(139, 92, 246, 0.6);
@@ -1568,10 +1573,12 @@ I specialize in video editing and content creation for brands and creators, help
 
             const shouldPlay = inView && tabVisible && !fadeOut && !modalOpen;
 
-            return h('div', { className: 'spread' + (fadeOut ? ' out' : ''), ref: wrapRef },
+            const compact = items.length === 8;
+
+            return h('div', { className: 'spread' + (compact ? ' tuff' : '') + (fadeOut ? ' out' : ''), ref: wrapRef },
                 h('div', {
                     className: 'spread-inner',
-                    style: { '--sw': '180px', '--sg': '18px' }
+                    style: compact ? { '--sw': '140px', '--sg': '10px' } : { '--sw': '180px', '--sg': '18px' }
                 },
                     items.map((c, i) =>
                         h(SpreadCard, { key: c.video + i, item: c, shouldPlay, onOpen })
@@ -1957,7 +1964,7 @@ I specialize in video editing and content creation for brands and creators, help
 
         function LiquidGlass() {
             return h('section', { className: 'p4', id: 'liquid-glass' },
-                h('h2', { className: 'graphic-page' }, 'graphic designing'),
+                h('h2', { className: 'graphic-page' }, 'graphic designing (under construction)'),
                 h('iframe', {
                     src: 'liquid-glass-carousel.html',
                     title: 'Liquid glass project carousel',
