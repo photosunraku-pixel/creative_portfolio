@@ -609,9 +609,13 @@ function createCarousel(mount, cursorElement, options) {
   function onLeave() { pointerInside = false; setHover(false); }
   function onClick(e) {
     if (suppressClick) { suppressClick = false; return; }
-    if (inputLocked()) return;
     const p = localPoint(e);
     const hit = panelAtPointer(p.x, p.y);
+    if (focusState.active) {
+      if (!hit || hit.poolIdx !== focusState.poolIdx) closeFocus();
+      return;
+    }
+    if (inputLocked()) return;
     if (!hit) return;
     if (centeredPanel && hit.poolIdx === centeredPanel.poolIdx) { pendingFocus = null; openFocus(); return; }
     userInteracted = true; velocity = 0;
