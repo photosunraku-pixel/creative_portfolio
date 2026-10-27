@@ -43,7 +43,13 @@
   #close { position: absolute; right: 4%; top: 4.5%; z-index: 20; font: 300 12px var(--wide); color: var(--ink); background: rgba(250, 249, 246, .72); border: 1px solid rgba(18, 17, 16, .18); border-radius: 99px; padding: .75em 1.3em; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s, background .25s, color .25s; }
   #close:hover { background: var(--dark); color: #fff; }
   #fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: var(--ink); font: 300 12px var(--wide); text-align: center; padding: 24px; }
-  @media (max-width: 639px) { #title { font-size: 15px; } #counter { font-size: 13px; } }
+  @media (max-width: 639px) {
+    #carousel { margin: 12px 12px 0; height: min(76svh, 620px); border-radius: 20px; }
+    .headline { margin: 28px 22px 48px; font-size: clamp(20px, 6vw, 30px); }
+    #title { font-size: 13px; }
+    #counter { font-size: 12px; }
+    #close { top: 4%; right: 4%; font-size: 10px; }
+  }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script type="importmap">

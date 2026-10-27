@@ -920,6 +920,221 @@
             .skip {
                 left: 20px
             }
+
+            .spread-inner {
+                justify-content: flex-start;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+                padding: 0 18px 12px;
+                scrollbar-width: none
+            }
+
+            .spread-inner::-webkit-scrollbar {
+                display: none
+            }
+
+            .spread-card,
+            .spread.tuff .spread-card {
+                width: clamp(112px, 30vw, 150px);
+                height: calc(clamp(112px, 30vw, 150px) * 16 / 9)
+            }
+        }
+
+        @media (max-width:600px) {
+            html {
+                scroll-snap-type: none;
+                scroll-behavior: auto
+            }
+
+            .p1 {
+                min-height: 100svh
+            }
+
+            .glow {
+                left: 0;
+                top: 24%;
+                width: 90vw;
+                height: 90vw
+            }
+
+            .ptitle {
+                margin: 0 18px;
+                padding-bottom: 8vh
+            }
+
+            .big {
+                font-size: clamp(38px, 15vw, 76px);
+                white-space: normal;
+                overflow-wrap: anywhere
+            }
+
+            .o {
+                width: .72em
+            }
+
+            .pill {
+                top: 72%;
+                font-size: clamp(12px, 4vw, 20px)
+            }
+
+            .sig {
+                margin-top: clamp(24px, 7vh, 58px);
+                font-size: clamp(34px, 12vw, 58px)
+            }
+
+            .hint {
+                bottom: 2.5vh;
+                font-size: 9px;
+                letter-spacing: .12em;
+                white-space: nowrap
+            }
+
+            .ab,
+            .sk,
+            .tl {
+                padding-left: 22px;
+                padding-right: 22px
+            }
+
+            .ab h2,
+            .sk h2,
+            .tl h2 {
+                font-size: clamp(46px, 18vw, 82px)
+            }
+
+            .ab p {
+                text-align: left;
+                font-size: 13px
+            }
+
+            .photo {
+                min-height: 240px;
+                border-radius: 20px 20px 0 0
+            }
+
+            .tools {
+                gap: 18px 14px
+            }
+
+            .tool {
+                min-width: 58px;
+                font-size: 10px
+            }
+
+            .tool i {
+                width: 54px
+            }
+
+            .reel {
+                min-height: 100svh;
+                height: 100svh;
+                grid-template-rows: 58px minmax(0, 1fr) auto;
+                padding: 0 6px
+            }
+
+            .brand {
+                left: 16px;
+                top: 16px;
+                font-size: clamp(38px, 12vw, 54px)
+            }
+
+            .top {
+                padding: 0 8px
+            }
+
+            .top .sp {
+                width: 108px
+            }
+
+            .top nav {
+                max-width: calc(100vw - 120px);
+                gap: 5px
+            }
+
+            .f {
+                font-size: 10px;
+                padding: .65em .8em
+            }
+
+            .bound {
+                border-radius: 18px
+            }
+
+            .copy {
+                padding: 14px 10px 20px
+            }
+
+            .copy h1 {
+                font-size: 19px
+            }
+
+            .stats {
+                gap: 16px
+            }
+
+            .stats b {
+                font-size: 25px
+            }
+
+            .sel {
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+                gap: 12px;
+                padding: 10px 14px 12px;
+                max-width: none;
+                border-radius: 16px
+            }
+
+            .sel b {
+                font-size: clamp(20px, 7vw, 34px)
+            }
+
+            .sel em {
+                font-size: 11px
+            }
+
+            .counter {
+                right: 14px;
+                bottom: 18px
+            }
+
+            .counter b {
+                font-size: clamp(52px, 18vw, 92px)
+            }
+
+            .skip {
+                left: 14px;
+                bottom: 18px
+            }
+
+            .graphic-page {
+                padding: 44px 22px 18px;
+                font-size: clamp(30px, 10vw, 48px)
+            }
+
+            .p4 iframe {
+                height: 720px
+            }
+
+            .yt-modal-backdrop {
+                padding: 10px
+            }
+
+            .yt-modal-dialog {
+                width: min(100%, 430px);
+                max-height: 96svh;
+                border-radius: 20px
+            }
+
+            .yt-video-wrap.is-wide {
+                width: calc(100% - 20px)
+            }
+
+            .yt-info {
+                padding-left: 18px;
+                padding-right: 18px
+            }
         }
 
         /* ===== PAGE 4: liquid glass carousel ===== */
@@ -1281,7 +1496,6 @@ I specialize in video editing and content creation for brands and creators, help
             { cat: 'misc', title: 'Lofi Pre-edit', cover: cover('#7c4dea', '#121110', 'X3'), video: 'portfolio_previews/Miscellaneous/lofi_pre_edit_preview.mp4', yt: 'https://youtu.be/7XqcGfxS82E' },
             { cat: 'misc', title: 'Real YT AS3', cover: cover('#7c4dea', '#121110', 'X4'), video: 'portfolio_previews/Miscellaneous/real yt as3_preview.mp4', yt: 'https://youtu.be/unZxJBBqF5M' },
         ];
-        const UNIQUE_VIDEOS = [...new Set(WORK.map(w => w.video))];
         const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
         const wrap = a => ((a + 180) % 360 + 360) % 360 - 180;
         const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
@@ -1305,7 +1519,8 @@ I specialize in video editing and content creation for brands and creators, help
             useEffect(() => {
                 const cv = ref.current, ctx = cv.getContext('2d'), box = cv.parentElement;
                 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-                const N = 56, TAU = 6.2832, P = [], S = [], dust = [];
+                const mobile = matchMedia('(max-width: 760px)').matches;
+                const N = mobile ? 38 : 56, TAU = 6.2832, P = [], S = [], dust = [];
                 const M = { x: 0, y: 0, ex: 0, ey: 0, on: false, at: -1e9, w: 0, tx: 0, ty: 0 };
                 let W = 0, H = 0, sc = 1, len = 13, t = 0, vis = true, raf, last = performance.now();
                 const path = tt => ({ x: W * (0.7 + 0.2 * Math.sin(tt * 0.6)), y: H * (0.5 + 0.3 * Math.sin(tt * 0.95 + 1.3)) });
@@ -1315,7 +1530,7 @@ I specialize in video editing and content creation for brands and creators, help
                 const radius = i => { const k = i / (N - 1); return sc * (30 * Math.pow(1 - k, 0.8) * (0.5 + 0.5 * Math.min(1, k * 6)) + 2); };
 
                 const size = () => {
-                    const r = box.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+                    const r = box.getBoundingClientRect(), dpr = Math.min(mobile ? 1.25 : 2, devicePixelRatio || 1);
                     W = r.width; H = r.height; sc = clamp(W / 1440, 0.55, 1.15); len = 13 * sc;
                     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
                     const h0 = path(t); P.length = 0; M.tx = h0.x; M.ty = h0.y;
@@ -1473,9 +1688,11 @@ I specialize in video editing and content creation for brands and creators, help
                 window.addEventListener('pointermove', pm);
                 if (reduce) settle();
                 else {
+                    const frameInterval = mobile ? 1000 / 30 : 0;
+                    let lastDraw = 0;
                     const tick = now => {
                         const dt = Math.min(0.05, (now - last) / 1000); last = now;
-                        if (vis) { step(dt); draw(); }
+                        if (vis && (!frameInterval || now - lastDraw >= frameInterval)) { step(dt); draw(); lastDraw = now; }
                         raf = requestAnimationFrame(tick);
                     };
                     raf = requestAnimationFrame(tick);
@@ -1713,6 +1930,7 @@ I specialize in video editing and content creation for brands and creators, help
                 const cards = [...stage.querySelectorAll('.card')];
                 const vids = cards.map(c => c.querySelector('video'));
                 const playing = cards.map(() => false);
+                let active = true, raf = 0;
                 vids.forEach(v => { v.muted = true; v.addEventListener('playing', () => { v.style.opacity = 1; }); });
                 resetRef.current = () => { vids.forEach(v => { v.pause(); v.style.opacity = 0; }); playing.fill(false); };
                 const ro = new ResizeObserver(() => {
@@ -1724,8 +1942,9 @@ I specialize in video editing and content creation for brands and creators, help
                 });
                 ro.observe(stage);
 
-                let last = performance.now(), raf;
+                let last = performance.now();
                 const tick = now => {
+                    if (!active || document.hidden) { raf = 0; return; }
                     const dt = Math.min(0.05, (now - last) / 1000); last = now;
                     const d = deal.get(), l = lift.get();
                     if (!reduce) { const dr = -7 * l * dt; S.cur += dr; S.target += dr; }
@@ -1758,11 +1977,32 @@ I specialize in video editing and content creation for brands and creators, help
                     }
                     raf = requestAnimationFrame(tick);
                 };
-                raf = requestAnimationFrame(tick);
-                return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+                const startLoop = () => { if (!raf && active && !document.hidden) raf = requestAnimationFrame(tick); };
+                const visibility = new IntersectionObserver(([entry]) => {
+                    active = entry.isIntersecting;
+                    if (active) {
+                        last = performance.now();
+                        startLoop();
+                    } else {
+                        resetRef.current();
+                    }
+                }, { threshold: 0.1 });
+                visibility.observe(secRef.current);
+                const onTabVisibility = () => {
+                    if (document.hidden) resetRef.current();
+                    else { last = performance.now(); startLoop(); }
+                };
+                document.addEventListener('visibilitychange', onTabVisibility);
+                startLoop();
+                return () => {
+                    cancelAnimationFrame(raf);
+                    visibility.disconnect();
+                    document.removeEventListener('visibilitychange', onTabVisibility);
+                    ro.disconnect();
+                };
             }, []);
 
-            /* entrance: assets load on page load; the deal waits until this page is in view, then deal -> lift */
+            /* entrance: cover images load on page load; the deal waits until this page is in view */
             useEffect(() => {
                 const finish = () => { doneRef.current = true; S.real = 100; setDone(true); };
                 if (reduce) { deal.set(1); lift.set(1); setUi({ on: true, delay: 0, instant: true }); finish(); return; }
@@ -1786,19 +2026,25 @@ I specialize in video editing and content creation for brands and creators, help
                 };
 
                 const imgs = [...document.querySelectorAll('.cover')];
-                const total = imgs.length + UNIQUE_VIDEOS.length + (SKY_IMAGE ? 1 : 0); let n = 0;
+                const total = imgs.length + (SKY_IMAGE ? 1 : 0); let n = 0;
                 const bump = () => { S.real = Math.round(++n / total * 100); };
                 const covers = Promise.all(imgs.map(im => (im.decode ? im.decode() : Promise.resolve()).catch(() => { }).then(bump)));
-                const previews = Promise.all([...UNIQUE_VIDEOS, ...(SKY_IMAGE ? [SKY_IMAGE] : [])].map(src => new Promise(res => {
-                    const v = document.createElement('video'); let fin = false;
-                    const ok = () => { if (fin) return; fin = true; bump(); res(); };
-                    if (src === SKY_IMAGE) { const im = new Image(); im.onload = im.onerror = ok; setTimeout(ok, 5000); im.src = src; return; }
-                    v.preload = 'metadata'; v.muted = true;
-                    v.addEventListener('loadedmetadata', ok); v.addEventListener('error', ok);
-                    setTimeout(ok, 5000); v.src = src;
-                })));
+                const background = SKY_IMAGE ? new Promise(res => {
+                    const im = new Image();
+                    let finished = false;
+                    const done = () => {
+                        if (finished) return;
+                        finished = true;
+                        bump();
+                        res();
+                    };
+                    im.onload = done;
+                    im.onerror = done;
+                    setTimeout(done, 5000);
+                    im.src = SKY_IMAGE;
+                }) : Promise.resolve();
                 covers.then(() => { coversReady = true; tryDeal(); });
-                Promise.all([covers, previews]).then(() => { ready = true; maybeLift(); });
+                Promise.all([covers, background]).then(() => { ready = true; maybeLift(); });
 
                 const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { inView = true; tryDeal(); io.disconnect(); } }, { threshold: 0.6 });
                 io.observe(secRef.current);
